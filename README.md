@@ -6,12 +6,27 @@
 <p>
    <a href="https://github.com/xunxxoie">
       <img src="https://avatars.githubusercontent.com/u/146558936?v=4" width="100">
-    </a>
+   </a>
 </p>
 
 ## 🙋 파트원
 
 <p>
+      <a href="https://github.com/Jungseokhwan">
+      <img src="https://avatars.githubusercontent.com/u/155729481?v=4" width="100">
+   </a>
+      <a href="https://github.com/da1nda2n">
+      <img src="https://avatars.githubusercontent.com/u/180918895?v=4" width="100">
+   </a>
+      <a href="https://github.com/d6nggyun">
+      <img src="https://avatars.githubusercontent.com/u/165386023?v=4" width="100">
+   </a>
+      <a href="https://github.com/frozzun">
+      <img src="https://avatars.githubusercontent.com/u/125655249?v=4" width="100">
+   </a>
+      <a href="https://github.com/Jun-77">
+      <img src="https://avatars.githubusercontent.com/u/80016088?v=4" width="100">
+   </a>
 </p>
 
 ---
