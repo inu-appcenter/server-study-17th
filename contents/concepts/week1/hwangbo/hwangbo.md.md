@@ -27,7 +27,7 @@ spring은 자바의 객체지향을 더 잘 활용해 웹 어플리케이션을 
 
 - spring은 어떤 구성 요소를 포함하고 있나요?
 
-![다운로드.png](%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C.png)
+![다운로드.png](다운로드.png)
 
 - spring과 springboot의 주요한 차이점은 무엇일까요?
 
