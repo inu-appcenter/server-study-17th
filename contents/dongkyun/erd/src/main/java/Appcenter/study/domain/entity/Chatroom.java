@@ -1,8 +1,10 @@
 package Appcenter.study.domain.entity;
 
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -21,8 +23,8 @@ public class Chatroom {
     @JoinColumn(name = "member2_id", nullable = false)
     private Member member2;
 
-    @Column(nullable = false)
-    private LocalDate createAt;
+    @CreatedDate
+    private LocalDateTime createAt;
 
     @OneToMany(mappedBy = "chatroom", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Chat> chats;

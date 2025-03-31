@@ -1,6 +1,7 @@
 package Appcenter.study.domain.entity;
 
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,8 +21,8 @@ public class Game {
     @Column(nullable = false, length = 20)
     private String genre;
 
-    @Column(nullable = false)
-    private LocalDate createdAt;
+    @CreatedDate
+    private LocalDateTime createAt;
 
     @Column(nullable = false, length = 30)
     private String developer;

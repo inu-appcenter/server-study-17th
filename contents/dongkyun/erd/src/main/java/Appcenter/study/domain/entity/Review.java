@@ -1,8 +1,10 @@
 package Appcenter.study.domain.entity;
 
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "review")
@@ -26,6 +28,6 @@ public class Review {
     @Column(nullable = false, length = 100)
     private String content;
 
-    @Column(nullable = false)
-    private LocalDate createdAt;
+    @CreatedDate
+    private LocalDateTime createAt;
 }

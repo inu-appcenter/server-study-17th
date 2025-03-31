@@ -1,6 +1,7 @@
 package Appcenter.study.domain.entity;
 
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,8 +22,8 @@ public class Purchase {
     @JoinColumn(name = "game_id", nullable = false)
     private Game game;
 
-    @Column(nullable = false)
-    private LocalDate createdAt;
+    @CreatedDate
+    private LocalDateTime createAt;
 
     @Column(nullable = false)
     private Integer price;

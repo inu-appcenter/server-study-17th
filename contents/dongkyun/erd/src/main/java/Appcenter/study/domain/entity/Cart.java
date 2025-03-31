@@ -1,8 +1,10 @@
 package Appcenter.study.domain.entity;
 
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "cart")
@@ -20,6 +22,6 @@ public class Cart {
     @JoinColumn(name = "game_id")
     private Game game;
 
-    @Column(nullable = false)
-    private LocalDate createAt;
+    @CreatedDate
+    private LocalDateTime createAt;
 }
