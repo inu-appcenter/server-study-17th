@@ -23,7 +23,8 @@ public class BasketDetail {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne
+  @JoinColumn(name = "basket_id")
   private Basket basket;
 
   private long productId;

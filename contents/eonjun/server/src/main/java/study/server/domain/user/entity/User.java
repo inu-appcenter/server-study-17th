@@ -28,11 +28,10 @@ public class User {
   private String address;
   private String phone;
 
-  @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
-  @JoinColumn(unique = true)
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
   private Basket basket;
 
-  @OneToMany(fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
   private List<Order> orders;
 
   @CreationTimestamp

@@ -26,10 +26,11 @@ public class Order {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
-  @OneToOne(fetch = FetchType.LAZY)
+  @OneToOne(fetch = FetchType.LAZY, mappedBy = "order")
   private OrderDetail orderDetail;
 
   @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id")
   private User user;
 
   @OneToOne(fetch = FetchType.LAZY)

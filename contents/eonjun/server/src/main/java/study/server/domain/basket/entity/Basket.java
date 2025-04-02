@@ -25,10 +25,11 @@ public class Basket {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
-  @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
+  @OneToOne
+  @JoinColumn(name = "user_id")
   private User user;
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "basket", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
   private List<BasketDetail> basketDetails;
 
   @CreationTimestamp
