@@ -18,7 +18,7 @@
     
     ![image.png](image.png)
     
-    ![image.png](image 1.png)
+    ![image.png](image%201.pngng)
 
 
 1. 스프링에서 ORM을 어떻게 활용하나요?
@@ -35,9 +35,9 @@
     
     JpaRepository 를 상속하면 Spring이 자동으로 빈으로 등록하기 때문에 @Repository 는 생략해도 됨.
     
-    ![image.png](image 3.png)
+    ![image.png](image%203.pngng)
     
-    ![image.png](image 4.png)
+    ![image.png](image%204.pngng)
     
     1. Repository Layer란 무엇일까요?
         
@@ -72,11 +72,11 @@
 - EntityManagerFactory통해 요청이 올 때 마다 EntityManager 생성
 - EntityManager는 내부적으로 Connection 사용하여 DB 접근
 
-![image.png](image 6.png)
+![image.png](image%206.pngng)
 
 엔티티 매니저:영속성 컨텍스트 = N : 1
 
-![image.png](image 7.png)
+![image.png](image%207.pngng)
 
 1. 영속성 컨택스트의 생명주기는 어떻게 되나요?
     
@@ -182,7 +182,7 @@
 
 연관관계 매핑이란 객체의 참조와 테이블의 외래 키를 매핑하는 것을 의미.
 
-![image.png](image 8.png)
+![image.png](image%208.pngng)
 
 근데 사실 객체를 직접 안받고 quizId를 받아도 됨.
 
@@ -312,7 +312,7 @@ public class Parent {
             ```
             
         
-![image.png](image 9.png)
+![image.png](image%209.pngng)
         
     
     1. Entity에 관련된 어노테이션은 무엇이 있나요?
