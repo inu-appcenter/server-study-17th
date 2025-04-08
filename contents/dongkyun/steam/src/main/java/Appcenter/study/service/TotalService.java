@@ -11,8 +11,10 @@ import Appcenter.study.repository.MemberRepository;
 import Appcenter.study.repository.PurchaseRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TotalService {
@@ -23,7 +25,7 @@ public class TotalService {
 
     public GameInfoResponse getGameInfo(Long gameId) {
         Game game = gameRepository.findById(gameId)
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("해당 게임이 존재하지 않습니다. ID = " + gameId));
 
         return GameInfoResponse.builder().game(game).build();
     }
@@ -31,13 +33,14 @@ public class TotalService {
     @Transactional
     public CartResponse addCart(Long memberId, Long gameId) {
         Member member = memberRepository.findById(memberId)
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다. ID = " + memberId));
         Game game = gameRepository.findById(gameId)
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("해당 게임이 존재하지 않습니다. ID = " + gameId));
 
         Cart cart = Cart.builder().member(member).game(game).build();
 
         member.addCart(cart);
+        log.info("addCart");
 
         return CartResponse.builder().cart(cart).build();
     }
@@ -45,9 +48,10 @@ public class TotalService {
     @Transactional
     public UpdateMypageResponse updateMypage(Long memberId, UpdateMypageRequest updateMypageRequest) {
         Member member = memberRepository.findById(memberId)
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다. ID = " + memberId));
 
         member.updateMypage(updateMypageRequest);
+        log.info("updateMypage");
 
         return UpdateMypageResponse.builder().member(member).build();
     }
@@ -55,9 +59,10 @@ public class TotalService {
     @Transactional
     public UpdateEmailResponse updateEmail(Long memberId, UpdateEmailRequest updateEmailRequest) {
         Member member = memberRepository.findById(memberId)
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다. ID = " + memberId));
 
         member.updateEmail(updateEmailRequest);
+        log.info("updateEmail");
 
         return UpdateEmailResponse.builder().member(member).build();
     }
@@ -65,11 +70,12 @@ public class TotalService {
     @Transactional
     public RefundResponse refund(Long memberId, Long gameId) {
         Member member = memberRepository.findById(memberId)
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다. ID=" + memberId));
         Game game = gameRepository.findById(gameId)
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("해당 게임이 존재하지 않습니다. ID=" + gameId));
 
         purchaseRepository.deleteByMemberAndGame(member, game);
+        log.info("delete purchase");
 
         return RefundResponse.builder().memberNickname(member.getNickname()).gameTitle(game.getTitle()).build();
     }
