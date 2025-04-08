@@ -40,3 +40,6 @@ out/
 # OS Files
 .DS_Store
 *DS_Store
+
+# Application Properties
+src/main/resources/application.yml
