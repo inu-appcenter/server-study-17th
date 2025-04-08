@@ -1,15 +1,15 @@
-package com.blog.appcenter_server_week2.Entity;
+package com.blog.appcenter_server_week2.domain.entity;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigInteger;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "user_table")
 public class UserEntity {
 
