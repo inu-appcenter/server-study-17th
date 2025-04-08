@@ -1,12 +1,10 @@
-package com.blog.appcenter_server_week2.Repository;
+package com.blog.appcenter_server_week2.domain.repository;
 
-import com.blog.appcenter_server_week2.Entity.UserEntity;
+import com.blog.appcenter_server_week2.domain.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Repository
-public interface UserRepository extends JpaRepository<UserEntity, Long> {
-    Optional<UserEntity> findByLoginId(String loginId);
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByLoginId(String loginId);
 }

@@ -2,8 +2,10 @@ package com.blog.appcenter_server_week2.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigInteger;
 
@@ -11,11 +13,11 @@ import java.math.BigInteger;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "user_table")
-public class UserEntity {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //auto_increment
-    private BigInteger id;
+    private Long id;
 
 
     @Column(nullable = false, unique = true)
@@ -34,6 +36,26 @@ public class UserEntity {
     private String profile_url;
 
     @Column
+    @ColumnDefault("36.5")
     private Double manner;
+
+    @Builder
+    public User(String loginId, String password, String nickname, String location, String profile_url, Double manner) {
+        this.loginId = loginId;
+        this.password = password;
+        this.nickname = nickname;
+        this.location = location;
+        this.profile_url = profile_url;
+        this.manner = manner;
+    }
+
+    public User update(String loginId, String password, String nickname, String location, String profile_url) {
+        this.loginId = loginId;
+        this.password = password;
+        this.nickname = nickname;
+        this.location = location;
+        this.profile_url = profile_url;
+        return this;
+    }
 
 }
