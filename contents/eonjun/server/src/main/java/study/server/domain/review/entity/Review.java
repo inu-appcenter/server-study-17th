@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import study.server.domain.basic.BaseEntity;
 import study.server.domain.product.entity.Product;
 
 import java.time.LocalDateTime;
@@ -16,9 +17,8 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
 @Builder
-public class Review {
+public class Review extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,13 +36,4 @@ public class Review {
 
   @Enumerated(EnumType.STRING)
   private Rating rating;
-
-  @CreationTimestamp
-  private LocalDateTime createdAt;
-
-  @UpdateTimestamp
-  private LocalDateTime updatedAt;
-
-  private boolean isDeleted;
-
 }
