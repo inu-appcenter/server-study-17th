@@ -29,6 +29,7 @@ public class UserService {
       .build();
   }
 
+  @Transactional
   public void registerUser(UserDto userDto) {
     userRepository.save(User.builder()
       .username(userDto.getUsername())
@@ -39,6 +40,7 @@ public class UserService {
       .build());
   }
 
+  @Transactional
   public void deleteUser(long userId) {
     userRepository.deleteById(userId);
   }

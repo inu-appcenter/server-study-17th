@@ -34,34 +34,21 @@ public class UserController {
       .body(ApiResponse.success("유저 등록 성공", null));
   }
 
-  /**
-   * ModelAttribute 사용
-   * @param userDto
-   * @return
-   */
-  @PostMapping("/register1")
-  public ResponseEntity<ApiResponse<Void>> register1(@ModelAttribute UserDto userDto) {
-    userService.registerUser(userDto);
-    return ResponseEntity
-      .status(HttpStatus.CREATED)
-      .body(ApiResponse.success("유저 등록 성공 (폼 방식)", null));
-  }
-
   @DeleteMapping("/delete")
   public ResponseEntity<ApiResponse<Void>> delete(@RequestParam Long userId) {
     userService.deleteUser(userId);
-    return ResponseEntity.ok(ApiResponse.success("유저 삭제 성공", null));
+    return ResponseEntity.ok(ApiResponse.success("유저 삭제 성공"));
   }
 
   @PatchMapping("/updateName")
   public ResponseEntity<ApiResponse<Void>> updateName(@RequestParam Long userId, @RequestParam String userName) {
     userService.updateUserName(userId, userName);
-    return ResponseEntity.ok(ApiResponse.success("유저 이름 수정 성공", null));
+    return ResponseEntity.ok(ApiResponse.success("유저 이름 수정 성공"));
   }
 
   @PutMapping("/update")
   public ResponseEntity<ApiResponse<Void>> update(@RequestParam Long userId, @RequestBody UserDto userDto) {
     userService.updateUserDetail(userId, userDto);
-    return ResponseEntity.ok(ApiResponse.success("유저 정보 수정 성공", null));
+    return ResponseEntity.ok(ApiResponse.success("유저 정보 수정 성공"));
   }
 }
