@@ -1,13 +1,11 @@
 package study.server.domain.product.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import study.server.domain.basic.BaseEntity;
 import study.server.domain.review.entity.Review;
 import study.server.domain.user.entity.Seller;
 
@@ -17,11 +15,10 @@ import java.util.List;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
 @Builder
-public class Product {
+public class Product extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,12 +39,4 @@ public class Product {
 
   @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Review> reviews;
-
-  @CreationTimestamp
-  private LocalDateTime createdAt;
-
-  @UpdateTimestamp
-  private LocalDateTime updatedAt;
-
-  private boolean isDeleted;
 }

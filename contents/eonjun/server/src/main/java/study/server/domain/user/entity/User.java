@@ -2,22 +2,20 @@ package study.server.domain.user.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import study.server.domain.basic.BaseEntity;
 import study.server.domain.basket.entity.Basket;
 import study.server.domain.order.entity.Order;
+import study.server.domain.user.dto.UserDto;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
 @Builder
-public class User {
+public class User extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
@@ -34,11 +32,15 @@ public class User {
   @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
   private List<Order> orders;
 
-  @CreationTimestamp
-  private LocalDateTime createdAt;
+  public void updateUserName(String userName) {
+    this.username = userName;
+  }
 
-  @UpdateTimestamp
-  private LocalDateTime updatedAt;
-
-  private boolean isDeleted;
+  public void update(UserDto dto) {
+    this.username = dto.getUsername();
+    this.email = dto.getEmail();
+    this.password = dto.getPassword();
+    this.address = dto.getAddress();
+    this.phone = dto.getPhone();
+  }
 }

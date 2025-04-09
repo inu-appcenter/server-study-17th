@@ -1,23 +1,20 @@
 package study.server.domain.basket.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import study.server.domain.basic.BaseEntity;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
 @Builder
-public class BasketDetail {
+public class BasketDetail extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,12 +27,4 @@ public class BasketDetail {
   private long productId;
 
   private long count;
-
-  @CreationTimestamp
-  private LocalDateTime createdAt;
-
-  @UpdateTimestamp
-  private LocalDateTime updatedAt;
-
-  private boolean isDeleted;
 }
