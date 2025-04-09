@@ -5,7 +5,9 @@ import Appcenter.study.entity.Review;
 import lombok.Builder;
 import lombok.Getter;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 public class GameInfoResponse {
@@ -17,7 +19,7 @@ public class GameInfoResponse {
     private final String publisher;
     private final Integer price;
     private final Double rate;
-    private final List<Review> reviews;
+    private final List<ReviewResponse> reviews;
 
     @Builder
     private GameInfoResponse(Game game) {
@@ -28,6 +30,8 @@ public class GameInfoResponse {
         this.publisher = game.getPublisher();
         this.price = game.getPrice();
         this.rate = game.getRate();
-        this.reviews = game.getReviews();
+        this.reviews = Optional.ofNullable(game.getReviews())
+                .orElse(new ArrayList<>())
+                .stream().map(ReviewResponse::of).toList();
     }
 }
