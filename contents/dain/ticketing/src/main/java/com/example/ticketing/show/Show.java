@@ -1,17 +1,19 @@
 package com.example.ticketing.show;
 
+import com.example.ticketing.show.dto.req.ShowUpdateRequestDto;
 import com.example.ticketing.ticket.Ticket;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
+@Table(name = "shows")
 @NoArgsConstructor
 public class Show {
     @Id
@@ -19,40 +21,54 @@ public class Show {
     private Long id;
 
     @Column(nullable = false)
-    private String show_title;
+    private String showTitle;
 
-    @Column(nullable = false)
-    private String poster_image;
+    private String posterImage;
 
-    private String detailed_image;
+    private String detailedImage;
 
-    private LocalDate ticketing_date;
+    private LocalDateTime ticketingDate;
 
-    private LocalDate start_date;
+    private LocalDateTime startDate;
 
-    private LocalDate end_date;
+    private LocalDateTime endDate;
 
-    private String show_rate;
+    private String showRate;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private ShowState show_state;
+    private ShowState showState;
 
-    private String cast;
+    private String casts;
 
     @OneToMany(mappedBy = "show", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ticket> tickets = new ArrayList<>();
 
     @Builder
-    private Show(String show_title, String poster_image, String detailed_image, LocalDate ticketing_date, LocalDate start_date, LocalDate end_date, String show_rate, ShowState show_state, String cast) {
-        this.show_title = show_title;
-        this.poster_image = poster_image;
-        this.detailed_image = detailed_image;
-        this.ticketing_date = ticketing_date;
-        this.start_date = start_date;
-        this.end_date = end_date;
-        this.show_rate = show_rate;
-        this.cast = cast;
+    private Show(String showTitle, String posterImage, String detailedImage,
+                 LocalDateTime ticketingDate, LocalDateTime startDate, LocalDateTime endDate,
+                 String showRate, ShowState showState, String casts) {
+        this.showTitle = showTitle;
+        this.posterImage = posterImage;
+        this.detailedImage = detailedImage;
+        this.ticketingDate = ticketingDate;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.showRate = showRate;
+        this.showState = showState;
+        this.casts = casts;
+    }
+
+    public Show update(ShowUpdateRequestDto dto) {
+        this.showTitle = dto.getShowTitle() != null ? dto.getShowTitle() : this.showTitle;
+        this.posterImage = dto.getPosterImage() != null ? dto.getPosterImage() : this.posterImage;
+        this.detailedImage = dto.getDetailedImage() != null ? dto.getDetailedImage() : this.detailedImage;
+        this.ticketingDate = dto.getTicketingDate() != null ? dto.getTicketingDate() : this.ticketingDate;
+        this.startDate = dto.getStartDate() != null ? dto.getStartDate() : this.startDate;
+        this.endDate = dto.getEndDate() != null ? dto.getEndDate() : this.endDate;
+        this.showRate = dto.getShowRate() != null ? dto.getShowRate() : this.showRate;
+        this.showState = dto.getShowState() != null ? dto.getShowState() : this.showState;
+        this.casts = dto.getCasts() != null ? dto.getCasts() : this.casts;
+        return this;
     }
 
 }
