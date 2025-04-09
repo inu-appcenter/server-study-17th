@@ -25,7 +25,7 @@ public class TotalController {
     // 장바구니 추가
     @PostMapping("/cart/{memberId}/{gameId}")
     public ResponseEntity<CartResponse> addCart(@PathVariable Long memberId, @PathVariable Long gameId) {
-        return ResponseEntity.status(HttpStatus.OK).body(totalService.addCart(memberId, gameId));
+        return ResponseEntity.status(HttpStatus.CREATED).body(totalService.addCart(memberId, gameId));
     }
 
     // 마이페이지 수정

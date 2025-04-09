@@ -9,10 +9,10 @@ import Appcenter.study.entity.Member;
 import Appcenter.study.repository.GameRepository;
 import Appcenter.study.repository.MemberRepository;
 import Appcenter.study.repository.PurchaseRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -23,6 +23,7 @@ public class TotalService {
     private final MemberRepository memberRepository;
     private final PurchaseRepository purchaseRepository;
 
+    @Transactional(readOnly = true)
     public GameInfoResponse getGameInfo(Long gameId) {
         Game game = gameRepository.findById(gameId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게임이 존재하지 않습니다. ID = " + gameId));
