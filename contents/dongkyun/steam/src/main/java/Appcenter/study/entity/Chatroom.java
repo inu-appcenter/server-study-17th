@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -29,4 +30,8 @@ public class Chatroom {
 
     @OneToMany(mappedBy = "chatroom", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Chat> chats;
+
+    public List<Chat> getChats() {
+        return Collections.unmodifiableList(chats);
+    }
 }

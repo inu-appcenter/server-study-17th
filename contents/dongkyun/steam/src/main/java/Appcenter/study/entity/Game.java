@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -47,4 +48,14 @@ public class Game {
 
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Cart> carts;
+
+    public List<Review> getReviews() {
+        return Collections.unmodifiableList(reviews);
+    }
+    public List<Purchase> getPurchases() {
+        return Collections.unmodifiableList(purchases);
+    }
+    public List<Cart> getCarts() {
+        return Collections.unmodifiableList(carts);
+    }
 }
