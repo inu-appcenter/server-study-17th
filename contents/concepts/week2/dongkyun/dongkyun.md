@@ -88,6 +88,9 @@
         2. @OneToMany → 일대다 관계
         3. @ManyToOne → 다대일 관계
         4. @ManyToMany → 다대다 관계
+           - fetch의 기본값 
+             - ~~ToOne -> FetchType.EAGER
+             - ~~ToMany -> FetchType.LAZY
     2. 방향
         1. 단방향 매핑 → 한 개의 엔티티에서만 다른 엔티티에 대한 참조가 가능한 경우
             1. 참조가 가능한 부모 엔티티에만 @OneToMany와 같은 어노테이션을 사용한다.
