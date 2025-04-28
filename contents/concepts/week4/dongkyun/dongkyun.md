@@ -120,17 +120,23 @@
             // 인증 객체를 SecurityContext에 저장
             SecurityContextHolder.getContext().setAuthentication(authentication);
             ```
-
-
-        ```java
-        // 인증된 상태로 다음 필터로 진행
-        filterChain.doFilter(request, response);
-        ```
+           
+            ```java
+            // 인증된 상태로 다음 필터로 진행
+            filterChain.doFilter(request, response);
+            ```
         
     
     →
-    
-    최종적으로는 SecurityContextHolder는 세션 영역에 있는 SecurityContext에 Authentication 객체를 저장한다. 사용자 정보를 저장한다는 것은 스프링 시큐리티가 전통적인 세선-쿠키 기반의 인증 방식을 사용한다는 것을 의미한다.
+    최종적으로는 SecurityContextHolder는 세션 영역에 있는 SecurityContext에 Authentication 객체를 저장한다.
+
+    사용자 정보를 저장한다는 것은 스프링 시큐리티가 전통적인 세선-쿠키 기반의 인증 방식을 사용한다는 것을 의미한다.
+
+    →
+
+    But, JWT 기반 인증을 쓸 때는 세션에 인증 정보를 저장하지 않고 매 요청마다 토큰으로 인증하는 구조
+
+    → Stateless 방식으로 변경
 
 
 ### 🍀 Jwt란 무엇이며, 어떤 역할을 하나요?
