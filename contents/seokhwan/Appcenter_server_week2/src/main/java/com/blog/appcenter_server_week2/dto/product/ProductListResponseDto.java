@@ -1,12 +1,9 @@
 package com.blog.appcenter_server_week2.dto.product;
 
 import com.blog.appcenter_server_week2.domain.entity.Product;
-import jakarta.persistence.Column;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.math.BigInteger;
 
 @Getter
 @NoArgsConstructor
@@ -27,7 +24,7 @@ public class ProductListResponseDto {
     private int productState;
 
     @Builder
-    public ProductListResponseDto(Long userId, Long price, String title, String description, String location, Long heart, int productState) {
+    private ProductListResponseDto(Long userId, Long price, String title, String description, String location, Long heart, int productState) {
         this.userId = userId;
         this.price = price;
         this.title = title;

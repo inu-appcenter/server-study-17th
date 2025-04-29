@@ -10,7 +10,7 @@ public class UserSignupResponseDto {
     private final String loginId;
 
     @Builder
-    public UserSignupResponseDto(String loginId) {
+    private UserSignupResponseDto(String loginId) {
         this.loginId = loginId;
     }
 

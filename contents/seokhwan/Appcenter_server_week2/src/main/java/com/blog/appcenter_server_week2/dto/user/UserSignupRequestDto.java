@@ -13,6 +13,9 @@ public class UserSignupRequestDto {
     private String loginId;
 
     @NotBlank
+    private String username;
+
+    @NotBlank
     private String password;
 
     @NotBlank
@@ -22,6 +25,5 @@ public class UserSignupRequestDto {
     private String location;
 
     private String profileUrl;
-
 
 }
