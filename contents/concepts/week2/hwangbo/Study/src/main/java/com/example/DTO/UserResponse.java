@@ -7,11 +7,12 @@ import lombok.Getter;
 public class UserResponse {
     private String name;
 
+
     public UserResponse(String name) {
         this.name = name;
     }
 
-    public static UserResponse Get(User user) {
+    public static UserResponse get(User user) {
         return new UserResponse(user.getName());
     }
 }
