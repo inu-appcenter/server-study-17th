@@ -60,16 +60,21 @@ public class MemberService {
         }
         log.info("Password Correct");
 
+        // 인증 토큰 생성
         UsernamePasswordAuthenticationToken authenticationToken = loginRequestDto.toAuthenticationToken();
         log.info("Member Authentication Token Created");
 
+        // Spring Security 인증 수행
+        // 내부적으로 UserDetailsService 호출
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         log.info("Member Authentication Token Authenticated");
 
+        // 인증 상태 확인
         if (!authentication.isAuthenticated()) {
             throw new CustomException(ErrorCode.LOGIN_FAILED);
         }
 
+        // JWT 토큰 생성
         LoginResponseDto loginResponseDto = jwtTokenProvider.generateToken(authentication);
         log.info("Member {} Login JWT Token Generated", member);
 
