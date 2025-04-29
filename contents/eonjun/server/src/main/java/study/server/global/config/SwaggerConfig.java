@@ -3,29 +3,37 @@ package study.server.global.config;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- *
- * @author : frozzun
- * @filename :SwaggerConfig.java
- * @since 10/12/24
- */
+import java.util.List;
+
 @Configuration
 public class SwaggerConfig {
   @Bean
   public OpenAPI openAPI() {
     return new OpenAPI()
-      .components(new Components())
-      .info(apiInfo());
+      .components(new Components()
+        .addSecuritySchemes("JWT", new SecurityScheme()
+          .name("JWT")
+          .type(SecurityScheme.Type.HTTP)
+          .scheme("bearer")
+          .bearerFormat("JWT")))
+      .addSecurityItem(new SecurityRequirement().addList("JWT"))
+      .info(apiInfo())
+      .servers(List.of(
+        new Server().url("http://localhost:8080")
+      ));
   }
 
   private Info apiInfo() {
     return new Info()
-      .title("API Test") // API의 제목
-      .description("AppCenter Swagger") // API에 대한 설명
-      .version("1.0.0"); // API의 버전
+      .title("API Test")
+      .description("Backend Swagger")
+      .version("1.0.0");
   }
 }
 

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @AllArgsConstructor
+// builder
 public class ApiResponse<T> {
   private int status;
   private String message;
@@ -16,8 +17,7 @@ public class ApiResponse<T> {
   }
 
   public static <T> ApiResponse<T> success(String message){
-    return new ApiResponse<>(HttpStatus.OK.value(), message, null);
-
+    return new ApiResponse<>(HttpStatus.OK.value(), message, null); //- > null 수저엉 or true, false >>??
   }
 
   public static <T> ApiResponse<T> success(String message, T data) {

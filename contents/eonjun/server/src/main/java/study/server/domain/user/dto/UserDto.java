@@ -2,9 +2,11 @@ package study.server.domain.user.dto;
 
 import lombok.*;
 import study.server.domain.basic.BaseEntity;
+import study.server.domain.user.entity.Role;
 
 @Getter
-public class UserDto extends BaseEntity {
+@NoArgsConstructor
+public class UserDto {
 
 
   private String username;
@@ -12,14 +14,16 @@ public class UserDto extends BaseEntity {
   private String password;
   private String address;
   private String phone;
+  private Role role;
 
   @Builder
-  public UserDto(String username, String email, String password, String address, String phone) {
+  public UserDto(String username, String email, String password, String address, String phone, Role role) {
     this.username = username;
     this.email = email;
     this.password = password;
     this.address = address;
     this.phone = phone;
+    this.role = role;
   }
 }
 

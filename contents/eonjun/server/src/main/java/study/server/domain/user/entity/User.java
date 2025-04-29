@@ -2,7 +2,6 @@ package study.server.domain.user.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import study.server.domain.basic.BaseEntity;
 import study.server.domain.basket.entity.Basket;
 import study.server.domain.order.entity.Order;
@@ -25,6 +24,9 @@ public class User extends BaseEntity {
   private String password;
   private String address;
   private String phone;
+
+  @Enumerated(EnumType.STRING)
+  private Role role;
 
   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
   private Basket basket;
