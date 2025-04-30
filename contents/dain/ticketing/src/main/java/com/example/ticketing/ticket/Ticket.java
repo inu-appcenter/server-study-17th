@@ -2,6 +2,7 @@ package com.example.ticketing.ticket;
 
 import com.example.ticketing.person.Person;
 import com.example.ticketing.show.Show;
+import com.example.ticketing.ticket.dto.req.TicketUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,14 +17,14 @@ public class Ticket {
     private Long id;
 
     @Column(nullable = false)
-    private String ticket_number;
+    private String ticketNumber;
 
     @Column(nullable = false)
-    private String ticket_seat;
+    private String ticketSeat;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private TicketState ticket_state;
+    private TicketState ticketState;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Person person;
@@ -32,11 +33,16 @@ public class Ticket {
     private Show show;
 
     @Builder
-    private Ticket(String ticket_number, String ticket_seat, TicketState ticket_state, Person person, Show show) {
-        this.ticket_number = ticket_number;
-        this.ticket_seat = ticket_seat;
-        this.ticket_state = ticket_state;
+    private Ticket(String ticketNumber, String ticketSeat, TicketState ticketState, Person person, Show show) {
+        this.ticketNumber = ticketNumber;
+        this.ticketSeat = ticketSeat;
+        this.ticketState = ticketState;
         this.person = person;
         this.show = show;
+    }
+
+    public void update(TicketUpdateRequestDto dto) {
+        this.ticketSeat = dto.getTicketSeat();
+        this.ticketState = dto.getTicketState();
     }
 }

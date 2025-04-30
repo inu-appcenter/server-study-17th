@@ -17,30 +17,24 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/person")
+@RequestMapping("/api/persons")
 public class PersonController {
 
     private final PersonService personService;
 
     @PostMapping("/signup")
-    public ResponseEntity<PersonSignupResponseDto> signup(@Valid @RequestBody PersonSignupRequestDto signupRequest) {
-        Person person = personService.signup(signupRequest);
-        PersonSignupResponseDto responseDto = PersonSignupResponseDto.from(person);
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
+    public ResponseEntity<PersonSignupResponseDto> signup(@Valid @RequestBody PersonSignupRequestDto requestDto) {
+        return ResponseEntity.ok(personService.signup(requestDto));
     }
 
     @PostMapping("/login")
     public ResponseEntity<PersonLoginResponseDto> login(@Valid @RequestBody PersonLoginRequestDto loginRequest) {
-        Person person = personService.login(loginRequest);
-        PersonLoginResponseDto responseDto = PersonLoginResponseDto.from(person);
-        return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+        return ResponseEntity.ok(personService.login(loginRequest));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PersonGetResponseDto> getPerson(@PathVariable Long id) {
-        Person person = personService.getPerson(id);
-        PersonGetResponseDto responseDto = PersonGetResponseDto.from(person);
-        return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+        return ResponseEntity.ok(personService.getPerson(id));
     }
 
     @GetMapping
@@ -51,9 +45,7 @@ public class PersonController {
 
     @PutMapping("/{id}")
     public ResponseEntity<PersonUpdateResponseDto> update(@PathVariable Long id, @Valid @RequestBody PersonUpdateRequestDto updateRequest) {
-        Person updatedPerson = personService.update(id, updateRequest);
-        PersonUpdateResponseDto responseDto = PersonUpdateResponseDto.from(updatedPerson);
-        return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+        return ResponseEntity.ok(personService.update(id, updateRequest));
     }
 
     @DeleteMapping("/{id}")

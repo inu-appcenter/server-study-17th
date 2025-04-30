@@ -24,18 +24,18 @@ public class SecurityConfig {
     // 비밀번호 암호화
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(); //단방향 해시 알고리즘(복호화 불가)
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                // CSRF 비활성화
+                // CSRF 비활성화(현재는 API서버라서)
                 .csrf(AbstractHttpConfigurer::disable)
                 // CORS 비활성화
                 .cors(AbstractHttpConfigurer::disable)
 
-                // 세션을 사용하지 않는 STATELESS
+                // 세션을 사용 x -> STATELESS
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
 

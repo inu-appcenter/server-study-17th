@@ -1,5 +1,53 @@
 package com.example.ticketing.ticket;
 
+import com.example.ticketing.ticket.dto.req.TicketCreateRequestDto;
+import com.example.ticketing.ticket.dto.req.TicketUpdateRequestDto;
+import com.example.ticketing.ticket.dto.res.TicketCreateResponseDto;
+import com.example.ticketing.ticket.dto.res.TicketGetResponseDto;
+import com.example.ticketing.ticket.dto.res.TicketUpdateResponseDto;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/tickets")
 public class TicketController {
+
+    private final TicketService ticketService;
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping
+    public ResponseEntity<TicketCreateResponseDto> create(@Valid @RequestBody TicketCreateRequestDto requestDto) {
+        return ResponseEntity.ok(ticketService.create(requestDto));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TicketGetResponseDto> getTicket(@PathVariable Long id) {
+        return ResponseEntity.ok(ticketService.getTicket(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<TicketGetResponseDto>> getTicketList() {
+        return ResponseEntity.ok(ticketService.getTicketList());
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{id}")
+    public ResponseEntity<TicketUpdateResponseDto> update(
+            @PathVariable Long id,
+            @Valid @RequestBody TicketUpdateRequestDto requestDto) {
+        return ResponseEntity.ok(ticketService.update(id, requestDto));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        ticketService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

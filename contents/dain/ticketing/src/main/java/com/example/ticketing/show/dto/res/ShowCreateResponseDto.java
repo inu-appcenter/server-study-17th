@@ -12,28 +12,23 @@ public class ShowCreateResponseDto {
     private final Long id;
     private final String showTitle;
     private final String posterImage;
-    private final String detailedImage;
     private final LocalDateTime ticketingDate;
     private final LocalDateTime startDate;
     private final LocalDateTime endDate;
-    private final String showRate;
     private final ShowState showState;
-    private final String casts;
+
 
     @Builder
-    public ShowCreateResponseDto(Long id, String showTitle, String posterImage, String detailedImage,
+    private ShowCreateResponseDto(Long id, String showTitle, String posterImage,
                                  LocalDateTime ticketingDate, LocalDateTime startDate, LocalDateTime endDate,
-                                 String showRate, ShowState showState, String casts) {
+                                 ShowState showState) {
         this.id = id;
         this.showTitle = showTitle;
         this.posterImage = posterImage;
-        this.detailedImage = detailedImage;
         this.ticketingDate = ticketingDate;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.showRate = showRate;
         this.showState = showState;
-        this.casts = casts;
     }
 
     public static ShowCreateResponseDto from(Show show) {
@@ -41,13 +36,10 @@ public class ShowCreateResponseDto {
                 .id(show.getId())
                 .showTitle(show.getShowTitle())
                 .posterImage(show.getPosterImage())
-                .detailedImage(show.getDetailedImage())
                 .ticketingDate(show.getTicketingDate())
                 .startDate(show.getStartDate())
                 .endDate(show.getEndDate())
-                .showRate(show.getShowRate())
                 .showState(show.getShowState())
-                .casts(show.getCasts())
                 .build();
     }
 }

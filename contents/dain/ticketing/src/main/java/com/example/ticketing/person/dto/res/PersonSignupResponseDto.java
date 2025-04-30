@@ -10,7 +10,7 @@ public class PersonSignupResponseDto {
     private final String loginId;
 
     @Builder
-    public PersonSignupResponseDto(Long id, String loginId) {
+    private PersonSignupResponseDto(Long id, String loginId) {
         this.id = id;
         this.loginId = loginId;
     }

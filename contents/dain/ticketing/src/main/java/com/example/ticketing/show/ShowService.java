@@ -1,13 +1,17 @@
 package com.example.ticketing.show;
 
+import com.example.ticketing.exception.CustomException;
+import com.example.ticketing.exception.ErrorCode;
 import com.example.ticketing.show.dto.req.ShowCreateRequestDto;
 import com.example.ticketing.show.dto.req.ShowUpdateRequestDto;
+import com.example.ticketing.show.dto.res.ShowCreateResponseDto;
 import com.example.ticketing.show.dto.res.ShowGetResponseDto;
+import com.example.ticketing.show.dto.res.ShowUpdateResponseDto;
+import com.example.ticketing.ticket.dto.res.TicketCreateResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,54 +22,50 @@ public class ShowService {
 
     // 공연 생성
     @Transactional
-    public Show create(ShowCreateRequestDto requestDto) {
+    public ShowCreateResponseDto create(ShowCreateRequestDto requestDto) {
         Show show = Show.builder()
                 .showTitle(requestDto.getShowTitle())
                 .posterImage(requestDto.getPosterImage())
-                .detailedImage(requestDto.getDetailedImage())
                 .ticketingDate(requestDto.getTicketingDate())
                 .startDate(requestDto.getStartDate())
                 .endDate(requestDto.getEndDate())
-                .showRate(requestDto.getShowRate())
                 .showState(requestDto.getShowState())
-                .casts(requestDto.getCasts())
                 .build();
-        return showRepository.save(show);
+        showRepository.save(show);
+        return ShowCreateResponseDto.from(show);
     }
+
 
     // 개별 공연 조회
     @Transactional(readOnly = true)
-    public Show getShow(Long id) {
-        return showRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 공연입니다."));
+    public ShowGetResponseDto getShow(Long id) {
+        Show show = showRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorCode.SHOW_NOT_FOUND));
+        return ShowGetResponseDto.from(show);
     }
 
     // 전체 공연 리스트 조회
     @Transactional(readOnly = true)
     public List<ShowGetResponseDto> getShowList() {
-        List<Show> showEntities = showRepository.findAll();
-        List<ShowGetResponseDto> responseList = new ArrayList<>();
-        for (Show show : showEntities) {
-            responseList.add(ShowGetResponseDto.from(show));
-        }
-        return responseList;
+        return showRepository.findAll().stream() //Stream API 활용
+                .map(ShowGetResponseDto::from)
+                .toList();
     }
 
     // 공연 수정
     @Transactional
-    public Show update(Long id, ShowUpdateRequestDto requestDto) {
+    public ShowUpdateResponseDto update(Long id, ShowUpdateRequestDto requestDto) {
         Show existingShow = showRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 공연입니다."));
-
+                .orElseThrow(() -> new CustomException(ErrorCode.SHOW_NOT_FOUND));
         existingShow.update(requestDto);
-        return showRepository.save(existingShow);
+        return ShowUpdateResponseDto.from(existingShow);
     }
 
     // 공연 삭제
     @Transactional
     public void delete(Long id) {
         Show show = showRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 공연입니다."));
+                .orElseThrow(() -> new CustomException(ErrorCode.SHOW_NOT_FOUND));
 
         showRepository.delete(show);
     }
