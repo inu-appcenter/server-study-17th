@@ -46,7 +46,8 @@ public class SecurityConfig {
 
                 // 요청 권한 설정 ( 해당 엔드포인트에 대해서는 허용 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/member/signup", "/api/member/login").permitAll()
+                        .requestMatchers("/api/member/signup", "/api/member/login",
+                                "/api/member/email/**", "/api/member/nickname/**").permitAll()
                         .anyRequest().authenticated()
                 )
 
