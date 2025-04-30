@@ -4,6 +4,8 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,10 +27,11 @@ public class UserService {
   private final AuthenticationManager authenticationManager;
   private final JwtTokenProvider jwtTokenProvider;
   private final PasswordEncoder passwordEncoder;
+  private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-  public UserDto getUserDetail(long userId) {
-    User user = userRepository.findById(userId)
-      .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. id=" + userId));
+  public UserDto getUserDetail(String email) {
+    User user = userRepository.findByEmail(email)
+      .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. email=" + email));
 
     return UserDto.builder()
       .username(user.getUsername())
