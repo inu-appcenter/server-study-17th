@@ -48,7 +48,7 @@ public class MemberService {
                 .build();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public LoginResponseDto login(LoginRequestDto loginRequestDto) {
 
         Member member = memberRepository.findByEmail(loginRequestDto.getEmail())
@@ -103,7 +103,7 @@ public class MemberService {
         return UpdateEmailResponse.builder().member(member).build();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Boolean checkEmailDuplicated(String email) {
         if (memberRepository.existsByEmail(email)) {
             throw new CustomException(ErrorCode.EMAIL_DUPLICATED);
@@ -111,7 +111,7 @@ public class MemberService {
         return true;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Boolean checkNicknameDuplicated(String nickname) {
         if (memberRepository.existsByNickname(nickname)) {
             throw new CustomException(ErrorCode.NICKNAME_DUPLICATED);

@@ -36,7 +36,7 @@ public class MemberController {
     }
 
     // 마이페이지 수정
-    @PutMapping("/mypage/update")
+    @PutMapping("/mypage")
     public ResponseEntity<UpdateMypageResponse> updateMypage(@AuthenticationPrincipal UserDetailsImpl userDetails, @Valid @RequestBody UpdateMypageRequest updateMypageRequest) {
         return ResponseEntity.status(HttpStatus.OK).body(memberService.updateMypage(userDetails, updateMypageRequest));
     }
