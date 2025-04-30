@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import study.server.domain.user.dto.LoginRequestDto;
 import study.server.domain.user.dto.UserDto;
+import study.server.domain.user.dto.UserResponseDto;
 import study.server.domain.user.entity.User;
 import study.server.domain.user.repository.UserRepository;
 import study.server.global.security.CustomUserDetails;
@@ -29,14 +30,13 @@ public class UserService {
   private final PasswordEncoder passwordEncoder;
   private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-  public UserDto getUserDetail(String email) {
+  public UserResponseDto getUserDetail(String email) {
     User user = userRepository.findByEmail(email)
       .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. email=" + email));
 
-    return UserDto.builder()
+    return UserResponseDto.builder()
       .username(user.getUsername())
       .email(user.getEmail())
-      .password(user.getPassword())
       .address(user.getAddress())
       .phone(user.getPhone())
       .role(user.getRole())

@@ -8,6 +8,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import study.server.domain.user.dto.LoginRequestDto;
 import study.server.domain.user.dto.UserDto;
+import study.server.domain.user.dto.UserResponseDto;
 import study.server.domain.user.service.UserService;
 import study.server.global.common.ApiResponse;
 import study.server.global.security.CustomUserDetails;
@@ -21,9 +22,9 @@ public class UserController {
 
   @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
   @GetMapping("/detail")
-  public ResponseEntity<ApiResponse<UserDto>> userDetail(@AuthenticationPrincipal CustomUserDetails userDetails) {
+  public ResponseEntity<ApiResponse<UserResponseDto>> userDetail(@AuthenticationPrincipal CustomUserDetails userDetails) {
 
-    UserDto userDto = userService.getUserDetail(userDetails.getUsername());
+    UserResponseDto userDto = userService.getUserDetail(userDetails.getUsername());
     return ResponseEntity.ok(ApiResponse.success("유저 조회 성공", userDto));
   }
 
