@@ -23,52 +23,41 @@ public class Show {
     @Column(nullable = false)
     private String showTitle;
 
+    @Column(nullable = false)
     private String posterImage;
 
-    private String detailedImage;
-
+    @Column(nullable = false)
     private LocalDateTime ticketingDate;
 
+    @Column(nullable = false)
     private LocalDateTime startDate;
 
+    @Column(nullable = false)
     private LocalDateTime endDate;
-
-    private String showRate;
 
     @Enumerated(EnumType.STRING)
     private ShowState showState;
-
-    private String casts;
 
     @OneToMany(mappedBy = "show", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ticket> tickets = new ArrayList<>();
 
     @Builder
-    private Show(String showTitle, String posterImage, String detailedImage,
-                 LocalDateTime ticketingDate, LocalDateTime startDate, LocalDateTime endDate,
-                 String showRate, ShowState showState, String casts) {
+    private Show(String showTitle, String posterImage, LocalDateTime ticketingDate,
+                 LocalDateTime startDate, LocalDateTime endDate, ShowState showState) {
         this.showTitle = showTitle;
         this.posterImage = posterImage;
-        this.detailedImage = detailedImage;
         this.ticketingDate = ticketingDate;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.showRate = showRate;
         this.showState = showState;
-        this.casts = casts;
     }
 
-    public Show update(ShowUpdateRequestDto dto) {
-        this.showTitle = dto.getShowTitle() != null ? dto.getShowTitle() : this.showTitle;
-        this.posterImage = dto.getPosterImage() != null ? dto.getPosterImage() : this.posterImage;
-        this.detailedImage = dto.getDetailedImage() != null ? dto.getDetailedImage() : this.detailedImage;
-        this.ticketingDate = dto.getTicketingDate() != null ? dto.getTicketingDate() : this.ticketingDate;
-        this.startDate = dto.getStartDate() != null ? dto.getStartDate() : this.startDate;
-        this.endDate = dto.getEndDate() != null ? dto.getEndDate() : this.endDate;
-        this.showRate = dto.getShowRate() != null ? dto.getShowRate() : this.showRate;
-        this.showState = dto.getShowState() != null ? dto.getShowState() : this.showState;
-        this.casts = dto.getCasts() != null ? dto.getCasts() : this.casts;
-        return this;
+    public void update(ShowUpdateRequestDto dto) {
+        this.showTitle = dto.getShowTitle();
+        this.posterImage = dto.getPosterImage();
+        this.ticketingDate = dto.getTicketingDate();
+        this.startDate = dto.getStartDate();
+        this.endDate = dto.getEndDate();
+        this.showState = dto.getShowState();
     }
-
 }

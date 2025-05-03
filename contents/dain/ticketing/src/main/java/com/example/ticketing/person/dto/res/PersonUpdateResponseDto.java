@@ -16,7 +16,7 @@ public class PersonUpdateResponseDto {
     private final LocalDateTime createdDate;
 
     @Builder
-    public PersonUpdateResponseDto(Long id, String personName, String email, Grade grade, String address, LocalDateTime createdDate) {
+    private PersonUpdateResponseDto(Long id, String personName, String email, Grade grade, String address, LocalDateTime createdDate) {
         this.id = id;
         this.personName = personName;
         this.email = email;

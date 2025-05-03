@@ -26,22 +26,31 @@ public class Person {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private String userName;
 
+    @Column(nullable = false)
     private String email;
 
+    @Column(nullable = false)
     private String address;
 
     @Enumerated(EnumType.STRING)
     private Grade grade;
 
+    @Column(nullable = false)
     private LocalDateTime createdDate;
+
+    // 권한 관리용 Role 필드
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ticket> tickets = new ArrayList<>();
 
     @Builder
-    private Person(String loginId, String password, String userName, String email, String address, Grade grade, LocalDateTime createdDate) {
+    private Person(String loginId, String password, String userName, String email, String address, Grade grade, LocalDateTime createdDate, Role role) {
         this.loginId = loginId;
         this.password = password;
         this.userName = userName;
@@ -49,18 +58,13 @@ public class Person {
         this.address = address;
         this.grade = grade;
         this.createdDate = createdDate;
+        this.role = role;
     }
 
     //현재 인스턴스의 필드를 직접 수정(반환x)
     public void update(PersonUpdateRequestDto dto) {
-        if (dto.getUserName() != null) {
-            this.userName = dto.getUserName();
-        }
-        if (dto.getEmail() != null) {
-            this.email = dto.getEmail();
-        }
-        if (dto.getAddress() != null) {
-            this.address = dto.getAddress();
-        }
-        }
+        this.userName = dto.getUserName();
+        this.email = dto.getEmail();
+        this.address = dto.getAddress();
     }
+}

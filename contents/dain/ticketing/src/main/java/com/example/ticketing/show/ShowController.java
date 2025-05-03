@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,34 +21,30 @@ public class ShowController {
 
     private final ShowService showService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<ShowCreateResponseDto> create(@Valid @RequestBody ShowCreateRequestDto requestDto) {
-        Show createdShow = showService.create(requestDto);
-        ShowCreateResponseDto responseDto = ShowCreateResponseDto.from(createdShow);
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
+        return ResponseEntity.ok(showService.create(requestDto));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ShowGetResponseDto> getShow(@PathVariable Long id) {
-        Show show = showService.getShow(id);
-        ShowGetResponseDto responseDto = ShowGetResponseDto.from(show);
-        return ResponseEntity.ok(responseDto);
+        return ResponseEntity.ok(showService.getShow(id));
     }
 
     @GetMapping
     public ResponseEntity<List<ShowGetResponseDto>> getShowList() {
-        List<ShowGetResponseDto> responseList = showService.getShowList();
-        return ResponseEntity.ok(responseList);
+        return ResponseEntity.ok(showService.getShowList());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<ShowUpdateResponseDto> update(@PathVariable Long id,
                                                         @Valid @RequestBody ShowUpdateRequestDto requestDto) {
-        Show updatedShow = showService.update(id, requestDto);
-        ShowUpdateResponseDto responseDto = ShowUpdateResponseDto.from(updatedShow);
-        return ResponseEntity.ok(responseDto);
+        return ResponseEntity.ok(showService.update(id, requestDto));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         showService.delete(id);

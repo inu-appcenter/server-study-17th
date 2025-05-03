@@ -2,6 +2,7 @@ package com.example.ticketing.show.dto.req;
 
 import com.example.ticketing.show.ShowState;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -12,19 +13,18 @@ public class ShowUpdateRequestDto {
     @NotBlank(message = "제목을 입력해주세요.")
     private String showTitle;
 
+    @NotBlank(message = "사진을 첨부해주세요.")
     private String posterImage;
 
-    private String detailedImage;
-
+    @NotNull(message = "티켓팅 시작일을 입력해주세요.")
     private LocalDateTime ticketingDate;
 
+    @NotNull(message = "공연 시작일을 입력해주세요.")
     private LocalDateTime startDate;
 
+    @NotNull(message = "공연 종료일을 입력해주세요.")
     private LocalDateTime endDate;
 
-    private String showRate;
-
+    @NotNull(message = "공연 상태를 입력해주세요.")
     private ShowState showState;
-    
-    private String casts;
 }
