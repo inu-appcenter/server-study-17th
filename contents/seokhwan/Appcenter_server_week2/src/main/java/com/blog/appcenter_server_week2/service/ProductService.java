@@ -15,13 +15,13 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ProductService {
 
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
 
 
-    @Transactional
     public ProductUploadResponseDto addProduct(Long userId, ProductUploadRequestDto productUploadRequestDto) {
         Product product = Product.builder()
                 .price(productUploadRequestDto.getPrice())
@@ -50,12 +50,12 @@ public class ProductService {
         return productListResponseDtos;
     }
 
-    @Transactional
+
     public ProductUploadResponseDto updateProduct(Long postId, ProductUploadRequestDto productUploadRequestDto) {
         //예외처리 생략
         Product existingProduct = productRepository.findById(postId).orElse(null);
 
-        Product saveProduct = productRepository.save(existingProduct.update(
+        Product saveProduct = existingProduct.update(
                 productUploadRequestDto.getPrice(),
                 productUploadRequestDto.getTitle(),
                 productUploadRequestDto.getDescription(),
@@ -63,12 +63,12 @@ public class ProductService {
                 existingProduct.getHeart(),
                 productUploadRequestDto.getProductState(),
                 existingProduct.getUser()
-        ));
+        );
 
         return ProductUploadResponseDto.from(saveProduct);
     }
 
-    @Transactional
+
     public void deleteProduct(Long postId) {
         productRepository.deleteById(postId);
     }

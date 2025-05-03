@@ -31,7 +31,7 @@ public class Product {
     private Long heart;
 
     @Column(nullable = false)
-    private int productState;
+    private Integer productState;
 
     // 작성자(유저)와의 다대일(N:1) 관계
     @ManyToOne(fetch = FetchType.LAZY)
@@ -39,7 +39,7 @@ public class Product {
     private User user;
 
     @Builder
-    public Product(Long postId, Long price, String title, String description, String location, Long heart, int productState, User user) {
+    private Product(Long postId, Long price, String title, String description, String location, Long heart, int productState, User user) {
         this.postId = postId;
         this.price = price;
         this.title = title;

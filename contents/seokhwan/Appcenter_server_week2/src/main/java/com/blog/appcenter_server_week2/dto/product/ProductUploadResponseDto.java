@@ -10,7 +10,7 @@ public class ProductUploadResponseDto {
     private final Long key;
 
     @Builder
-    public ProductUploadResponseDto(Long key) {
+    private ProductUploadResponseDto(Long key) {
         this.key = key;
     }
 

@@ -18,7 +18,7 @@ public class ProductUploadRequestDto {
     private String description;
 
     @NotBlank
-    private int productState;
+    private Integer productState;
 
 
 

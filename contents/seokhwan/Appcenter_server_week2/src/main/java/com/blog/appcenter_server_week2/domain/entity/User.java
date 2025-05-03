@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigInteger;
+import java.net.ProtocolFamily;
 
 @Entity
 @Getter
@@ -22,6 +23,9 @@ public class User {
 
     @Column(nullable = false, unique = true)
     private String loginId;
+
+    @Column(nullable = false)
+    private String username;
 
     @Column(nullable = false)
     private String password;
@@ -40,8 +44,9 @@ public class User {
     private Double manner;
 
     @Builder
-    public User(String loginId, String password, String nickname, String location, String profile_url, Double manner) {
+    private User(String loginId, String username, String password, String nickname, String location, String profile_url, Double manner) {
         this.loginId = loginId;
+        this.username = username;
         this.password = password;
         this.nickname = nickname;
         this.location = location;
@@ -49,8 +54,9 @@ public class User {
         this.manner = manner;
     }
 
-    public User update(String loginId, String password, String nickname, String location, String profile_url) {
+    public User update(String loginId, String username, String password, String nickname, String location, String profile_url) {
         this.loginId = loginId;
+        this.username = username;
         this.password = password;
         this.nickname = nickname;
         this.location = location;
@@ -58,4 +64,6 @@ public class User {
         return this;
     }
 
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.USER;
 }
