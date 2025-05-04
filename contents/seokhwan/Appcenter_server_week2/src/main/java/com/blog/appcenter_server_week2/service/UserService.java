@@ -1,16 +1,24 @@
 package com.blog.appcenter_server_week2.service;
 
-import com.blog.appcenter_server_week2.config.SecurityConfig;
-import com.blog.appcenter_server_week2.domain.entity.Product;
 import com.blog.appcenter_server_week2.domain.entity.User;
 import com.blog.appcenter_server_week2.domain.repository.UserRepository;
 import com.blog.appcenter_server_week2.dto.user.LoginRequestDto;
-import com.blog.appcenter_server_week2.dto.user.LoginResponseDto;
+import com.blog.appcenter_server_week2.dto.user.UserInfoDto;
 import com.blog.appcenter_server_week2.dto.user.UserSignupRequestDto;
 import com.blog.appcenter_server_week2.dto.user.UserSignupResponseDto;
+import com.blog.appcenter_server_week2.exception.CustomException;
+import com.blog.appcenter_server_week2.exception.ErrorCode;
+import com.blog.appcenter_server_week2.jwt.JwtTokenProvider;
+import com.blog.appcenter_server_week2.jwt.TokenResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -18,14 +26,18 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final SecurityConfig securityConfig;
+    private final AuthenticationManagerBuilder authenticationManager;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final PasswordEncoder passwordEncoder;
 
     public UserSignupResponseDto signup(UserSignupRequestDto userSignupRequestDto) {
-        //예외처리 생략
+        userRepository.findByLoginId(userSignupRequestDto.getLoginId()).ifPresent(existingUser -> {
+            throw new CustomException(ErrorCode.DUPLICATE_LOGINID);
+        });
         User user = User.builder()
                 .loginId(userSignupRequestDto.getLoginId())
                 .username(userSignupRequestDto.getUsername())
-                .password(securityConfig.passwordEncoder().encode(userSignupRequestDto.getPassword()))
+                .password(passwordEncoder.encode(userSignupRequestDto.getPassword()))
                 .nickname(userSignupRequestDto.getNickname())
                 .location(userSignupRequestDto.getLocation())
                 .profile_url(userSignupRequestDto.getProfileUrl())
@@ -38,13 +50,11 @@ public class UserService {
 
 
     public UserSignupResponseDto updateUser(Long userId, UserSignupRequestDto userSignupRequestDto) {
-        //예외처리 생략
-        User existingUser = userRepository.findById(userId).orElse(null);
-
+        User existingUser = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.NOT_EXIST_ID));
         User saveUser = userRepository.save(existingUser.update(
                 userSignupRequestDto.getLoginId(),
                 userSignupRequestDto.getUsername(),
-                securityConfig.passwordEncoder().encode(userSignupRequestDto.getPassword()),
+                passwordEncoder.encode(userSignupRequestDto.getPassword()),
                 userSignupRequestDto.getNickname(),
                 userSignupRequestDto.getLocation(),
                 userSignupRequestDto.getProfileUrl()
@@ -54,10 +64,22 @@ public class UserService {
     }
 
 
-    public LoginResponseDto login(LoginRequestDto loginRequestDto) {
-        User user = userRepository.findByLoginId(loginRequestDto.getLoginId()).orElse(null);
-        if (!securityConfig.passwordEncoder().matches(loginRequestDto.getPassword(), user.getPassword()))
-            throw new RuntimeException("Incorrect password");
-        return new LoginResponseDto(loginRequestDto.getLoginId());
+    public TokenResponseDto login(LoginRequestDto loginRequestDto) {
+        // 인증 처리
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(loginRequestDto.getLoginId(), loginRequestDto.getPassword());
+        Authentication authentication = authenticationManager.getObject().authenticate(authenticationToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        // JWT 토큰 생성
+        String token = jwtTokenProvider.createToken(authentication);
+
+        return new TokenResponseDto(token);
+    }
+
+    @Transactional(readOnly = true)
+    public UserInfoDto getUserInfo(String loginId) {
+        User user = userRepository.findByLoginId(loginId).orElseThrow(() -> new CustomException(ErrorCode.NOT_EXIST_ID));
+        return UserInfoDto.from(user);
     }
 }
