@@ -9,8 +9,11 @@ import com.example.ticketing.person.dto.res.PersonGetResponseDto;
 import com.example.ticketing.person.dto.res.PersonLoginResponseDto;
 import com.example.ticketing.person.dto.res.PersonSignupResponseDto;
 import com.example.ticketing.person.dto.res.PersonUpdateResponseDto;
+import com.example.ticketing.security.CustomUserDetails;
 import com.example.ticketing.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,13 +60,24 @@ public class PersonService {
         return PersonLoginResponseDto.from(person, token);
     }
 
-    //회원 정보(전체) 수정
+    //회원 정보 수정
     @Transactional
-    public PersonUpdateResponseDto update(Long personId, PersonUpdateRequestDto personUpdateRequestDto) {
-        Person existingPerson = personRepository.findById(personId)
+    public PersonUpdateResponseDto update(Long personId, PersonUpdateRequestDto dto) {
+        // SecurityContextHolder에서 로그인 아이디 꺼내기
+        String loginId = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();
+        // loginId로 Person 엔티티 조회
+        Person p = personRepository.findByLoginId(loginId)
                 .orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
-        existingPerson.update(personUpdateRequestDto);
-        return PersonUpdateResponseDto.from(existingPerson);
+        // personId와 비교
+        if (!p.getId().equals(personId)) {
+            throw new CustomException(ErrorCode.FORBIDDEN_PERMISSION);
+        }
+        Person existing = personRepository.findById(personId)
+                .orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
+        existing.update(dto);
+        return PersonUpdateResponseDto.from(existing);
     }
 
     //전체 회원 조회
@@ -85,9 +99,20 @@ public class PersonService {
     //회원 삭제
     @Transactional
     public void delete(Long personId) {
-        Person person = personRepository.findById(personId)
+        // SecurityContextHolder에서 로그인 아이디 꺼내기
+        String loginId = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();
+        // loginId로 Person 엔티티 조회
+        Person p = personRepository.findByLoginId(loginId)
                 .orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
-        personRepository.delete(person);
+        // personId와 비교
+        if (!p.getId().equals(personId)) {
+            throw new CustomException(ErrorCode.FORBIDDEN_PERMISSION);
+        }
+        Person existing = personRepository.findById(personId)
+                .orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
+        personRepository.delete(existing);
     }
 }
 
