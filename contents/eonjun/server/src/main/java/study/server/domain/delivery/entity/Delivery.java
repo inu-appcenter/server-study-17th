@@ -2,13 +2,8 @@ package study.server.domain.delivery.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import study.server.domain.basic.BaseEntity;
+import study.server.global.common.BaseEntity;
 import study.server.domain.order.entity.OrderDetail;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Getter

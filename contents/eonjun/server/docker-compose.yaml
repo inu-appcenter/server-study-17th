@@ -20,12 +20,12 @@ services:
 
   mysql:
     hostname: mysql
-    container_name: mysql
+    container_name: mysql-server
     image: mysql:latest
     env_file:
       - .env
     ports:
-      - "3306:3306"
+      - "3310:3306"
     volumes:
       - db_mysql:/var/lib/mysql
     healthcheck:

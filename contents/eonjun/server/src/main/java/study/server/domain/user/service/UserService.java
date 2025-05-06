@@ -14,6 +14,8 @@ import study.server.domain.user.dto.UserDto;
 import study.server.domain.user.dto.UserResponseDto;
 import study.server.domain.user.entity.User;
 import study.server.domain.user.repository.UserRepository;
+import study.server.global.exception.user.UserAlreadyExistsException;
+import study.server.global.exception.user.UserNotFoundException;
 import study.server.global.security.CustomUserDetails;
 import study.server.global.security.jwt.JwtTokenProvider;
 
@@ -32,7 +34,7 @@ public class UserService {
 
   public UserResponseDto getUserDetail(String email) {
     User user = userRepository.findByEmail(email)
-      .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. email=" + email));
+      .orElseThrow(UserNotFoundException::new);
 
     return UserResponseDto.builder()
       .username(user.getUsername())
@@ -45,6 +47,12 @@ public class UserService {
 
   @Transactional
   public void registerUser(UserDto userDto) {
+    // 이메일 중복 확인
+    boolean emailExists = userRepository.existsByEmail(userDto.getEmail());
+    if (emailExists) {
+      throw new UserAlreadyExistsException(); // 이미 등록된 이메일이 있을 경우 예외 던짐
+    }
+
     userRepository.save(User.builder()
       .username(userDto.getUsername())
       .email(userDto.getEmail())
@@ -64,20 +72,23 @@ public class UserService {
     // 인증이 성공하면 JWT 토큰을 생성하여 반환
     CustomUserDetails userDetails = userRepository.findByEmail(requestDto.getEmail())
       .map(CustomUserDetails::new)
-      .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다"));
+      .orElseThrow(UserNotFoundException::new);
 
     return jwtTokenProvider.generateToken(userDetails);
   }
 
   @Transactional
   public void deleteUser(long userId) {
+    User user = userRepository.findById(userId)
+      .orElseThrow(UserNotFoundException::new);  // 삭제할 유저가 없으면 예외 던짐
+
     userRepository.deleteById(userId);
   }
 
   @Transactional
   public void updateUserName(long userId, String userName) {
     User user = userRepository.findById(userId)
-      .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. id=" + userId));
+      .orElseThrow(UserNotFoundException::new);  // 유저가 없으면 예외 던짐
 
     user.updateUserName(userName);
   }
@@ -85,7 +96,7 @@ public class UserService {
   @Transactional
   public void updateUserDetail(Long userId, UserDto userDto) {
     User user = userRepository.findById(userId)
-      .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. id=" + userId));
+      .orElseThrow(UserNotFoundException::new);  // 유저가 없으면 예외 던짐
 
     user.update(userDto);
   }

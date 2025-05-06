@@ -2,7 +2,7 @@ package study.server.domain.user.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import study.server.domain.basic.BaseEntity;
+import study.server.global.common.BaseEntity;
 import study.server.domain.basket.entity.Basket;
 import study.server.domain.order.entity.Order;
 import study.server.domain.user.dto.UserDto;

@@ -2,15 +2,10 @@ package study.server.domain.product.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import study.server.domain.basic.BaseEntity;
+import study.server.global.common.BaseEntity;
 import study.server.domain.review.entity.Review;
 import study.server.domain.user.entity.Seller;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
