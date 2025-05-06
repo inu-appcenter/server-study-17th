@@ -4,6 +4,8 @@ import Appcenter.study.domain.game.Game;
 import Appcenter.study.domain.member.Member;
 import Appcenter.study.domain.game.GameRepository;
 import Appcenter.study.domain.member.MemberRepository;
+import Appcenter.study.global.exception.CustomException;
+import Appcenter.study.global.exception.ErrorCode;
 import Appcenter.study.global.security.jwt.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,9 +23,9 @@ public class CartService {
     @Transactional
     public CartResponse addCart(UserDetailsImpl userDetails, Long gameId) {
         Member member = memberRepository.findById(userDetails.getMember().getId())
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         Game game = gameRepository.findById(gameId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게임이 존재하지 않습니다. ID = " + gameId));
+                .orElseThrow(() -> new CustomException(ErrorCode.GAME_NOT_FOUND));
 
         Cart cart = Cart.builder().member(member).game(game).build();
 

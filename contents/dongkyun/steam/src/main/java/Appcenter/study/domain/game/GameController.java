@@ -1,6 +1,5 @@
 package Appcenter.study.domain.game;
 
-import Appcenter.study.domain.purchase.RefundResponse;
 import Appcenter.study.global.security.jwt.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
