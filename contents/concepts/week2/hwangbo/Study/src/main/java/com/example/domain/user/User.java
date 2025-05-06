@@ -23,6 +23,10 @@ public class User {
     private String phoneNumber;
     private String address;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
 
     public User(String email, String password, String name, String phoneNumber, String address) {
         this.email = email;

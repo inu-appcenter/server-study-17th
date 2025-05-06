@@ -20,12 +20,10 @@ import java.util.Optional;
 public class CartService {
     private final CartRepository cartRepository;
 
+    // 이거 뭔가뭔가임.. 그냥 빈 장바구니 반환하면 되지 왜 예외를 터뜨리게 해놨을까
     public CartResponse getCartByUserId(Long userId) {
-        Optional<Cart> optionalCart = cartRepository.findByUserId(userId);
-
-        Cart cart = optionalCart
-                .orElseThrow(() ->
-                        new NoSuchElementException("Cart not found for user: " + userId));
+        Cart cart = cartRepository.findByUserId(userId)
+                .orElseThrow(() -> new NoSuchElementException("cart not found for user: " + userId));
 
         return CartResponse.from(cart);
     }
