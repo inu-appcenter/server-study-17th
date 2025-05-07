@@ -5,6 +5,7 @@ import com.example.ticketing.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -40,8 +41,16 @@ public class SecurityConfig {
                 )
 
                 // 회원가입, 로그인 외에는 인증 후에만 호출 가능
+                // shows 생성, 수정, 삭제는 ADMIN만 허용
+                // tickets 생성, 수정, 삭제는 ADMIN만 허용
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/persons/signup", "/api/persons/login").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/shows").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/api/shows/*").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE,"/api/shows/*").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST,"/api/tickets").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/api/tickets/*").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE,"/api/tickets/*").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
 

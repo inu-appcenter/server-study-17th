@@ -21,7 +21,6 @@ public class ShowController {
 
     private final ShowService showService;
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<ShowCreateResponseDto> create(@Valid @RequestBody ShowCreateRequestDto requestDto) {
         return ResponseEntity.ok(showService.create(requestDto));
@@ -37,14 +36,12 @@ public class ShowController {
         return ResponseEntity.ok(showService.getShowList());
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<ShowUpdateResponseDto> update(@PathVariable Long id,
                                                         @Valid @RequestBody ShowUpdateRequestDto requestDto) {
         return ResponseEntity.ok(showService.update(id, requestDto));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         showService.delete(id);

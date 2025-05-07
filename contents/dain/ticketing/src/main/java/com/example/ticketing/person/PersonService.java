@@ -14,6 +14,7 @@ import com.example.ticketing.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +42,7 @@ public class PersonService {
                 .password(passwordEncoder.encode(personSignupRequestDto.getPassword()))
                 .createdDate(LocalDateTime.now())
                 .role(Role.ROLE_USER) // USER 권한 부여
+                .grade(Grade.WELCOME) // 최초 등급 WELCOME 부여
                 .build();
         personRepository.save(person);
         return PersonSignupResponseDto.from(person);
@@ -62,20 +64,13 @@ public class PersonService {
 
     //회원 정보 수정
     @Transactional
-    public PersonUpdateResponseDto update(Long personId, PersonUpdateRequestDto dto) {
-        // SecurityContextHolder에서 로그인 아이디 꺼내기
-        String loginId = SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getName();
-        // loginId로 Person 엔티티 조회
-        Person p = personRepository.findByLoginId(loginId)
-                .orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
-        // personId와 비교
-        if (!p.getId().equals(personId)) {
-            throw new CustomException(ErrorCode.FORBIDDEN_PERMISSION);
-        }
-        Person existing = personRepository.findById(personId)
-                .orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
+    public PersonUpdateResponseDto update(UserDetails user, PersonUpdateRequestDto dto) {
+        //loginId 꺼내기
+        String username = user.getUsername();
+
+        //loginId로 조회
+        Person existing = personRepository.findByLoginId(username)
+                        .orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
         existing.update(dto);
         return PersonUpdateResponseDto.from(existing);
     }
@@ -83,35 +78,26 @@ public class PersonService {
     //전체 회원 조회
     @Transactional(readOnly = true)
     public List<PersonGetResponseDto> getPersonList() {
-        return personRepository.findAll().stream() //Stream API 활용
+        return personRepository.findAll().stream() //Stream API 활용 -> findAll() 대신 동적쿼리(JPQL)로 DB에서 가져오기
                 .map(PersonGetResponseDto::from)
                 .toList();
     }
 
     //개별 회원 조회
     @Transactional(readOnly = true)
-    public PersonGetResponseDto getPerson(Long personId) {
-        Person person = personRepository.findById(personId)
+    public PersonGetResponseDto getPerson(UserDetails user) {
+        String username = user.getUsername();
+        Person existing = personRepository.findByLoginId(username)
                 .orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
-        return PersonGetResponseDto.from(person);
+        return PersonGetResponseDto.from(existing);
     }
 
     //회원 삭제
     @Transactional
-    public void delete(Long personId) {
-        // SecurityContextHolder에서 로그인 아이디 꺼내기
-        String loginId = SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getName();
-        // loginId로 Person 엔티티 조회
-        Person p = personRepository.findByLoginId(loginId)
-                .orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
-        // personId와 비교
-        if (!p.getId().equals(personId)) {
-            throw new CustomException(ErrorCode.FORBIDDEN_PERMISSION);
-        }
-        Person existing = personRepository.findById(personId)
-                .orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
+    public void delete(UserDetails user) {
+        String username = user.getUsername();
+        Person existing = personRepository.findByLoginId(username)
+                        .orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
         personRepository.delete(existing);
     }
 }

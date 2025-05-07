@@ -11,6 +11,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,25 +34,25 @@ public class PersonController {
         return ResponseEntity.ok(personService.login(loginRequest));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<PersonGetResponseDto> getPerson(@PathVariable Long id) {
-        return ResponseEntity.ok(personService.getPerson(id));
+    @GetMapping
+    public ResponseEntity<PersonGetResponseDto> getPerson(@AuthenticationPrincipal UserDetails user) {
+        return ResponseEntity.ok(personService.getPerson(user));
     }
 
-    @GetMapping
+    @GetMapping("/list")
     public ResponseEntity<List<PersonGetResponseDto>> getPersonList() {
         List<PersonGetResponseDto> responseList = personService.getPersonList();
         return ResponseEntity.status(HttpStatus.OK).body(responseList);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<PersonUpdateResponseDto> update(@PathVariable Long id, @Valid @RequestBody PersonUpdateRequestDto updateRequest) {
-        return ResponseEntity.ok(personService.update(id, updateRequest));
+    @PutMapping
+    public ResponseEntity<PersonUpdateResponseDto> update(@AuthenticationPrincipal UserDetails user, @Valid @RequestBody PersonUpdateRequestDto updateRequest) {
+        return ResponseEntity.ok(personService.update(user, updateRequest));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        personService.delete(id);
+    @DeleteMapping
+    public ResponseEntity<Void> delete(@AuthenticationPrincipal UserDetails user) {
+        personService.delete(user);
         return ResponseEntity.noContent().build();
     }
 }
