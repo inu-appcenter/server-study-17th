@@ -21,8 +21,7 @@ public class UserController {
 
   private final UserService userService;
 
-  @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-  @GetMapping("/detail")
+  @GetMapping
   public ResponseEntity<ApiResponse<UserResponseDto>> userDetail(@AuthenticationPrincipal CustomUserDetails userDetails) {
 
     UserResponseDto userDto = userService.getUserDetail(userDetails.getUsername());
@@ -45,15 +44,13 @@ public class UserController {
       .body(ApiResponse.success("유저 로그인 성공", token));
   }
 
-  @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-  @PatchMapping("/updateName")
+  @PatchMapping
   public ResponseEntity<ApiResponse<Void>> updateName(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestParam String userName) {
     userService.updateUserName(userDetails.getUser().getId(), userName);
     return ResponseEntity.ok(ApiResponse.success("유저 이름 수정 성공"));
   }
 
-  @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-  @PutMapping("/update")
+  @PutMapping
   public ResponseEntity<ApiResponse<Void>> update(@AuthenticationPrincipal CustomUserDetails userDetails, @Valid @RequestBody UserDto userDto) {
     userService.updateUserDetail(userDetails.getUser().getId(), userDto);
     return ResponseEntity.ok(ApiResponse.success("유저 정보 수정 성공"));
