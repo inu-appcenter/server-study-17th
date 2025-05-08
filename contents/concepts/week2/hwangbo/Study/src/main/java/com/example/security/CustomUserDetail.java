@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 @RequiredArgsConstructor
 public class CustomUserDetail implements UserDetails {
@@ -26,6 +25,7 @@ public class CustomUserDetail implements UserDetails {
         return roles;
     }
 
+    public Long getId() {return user.getId();}
     @Override
     public String getPassword() {
         return user.getPassword();
