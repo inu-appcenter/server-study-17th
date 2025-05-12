@@ -1,5 +1,6 @@
 package study.server.domain.user.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +21,7 @@ public class UserController {
 
   private final UserService userService;
 
-  @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-  @GetMapping("/detail")
+  @GetMapping
   public ResponseEntity<ApiResponse<UserResponseDto>> userDetail(@AuthenticationPrincipal CustomUserDetails userDetails) {
 
     UserResponseDto userDto = userService.getUserDetail(userDetails.getUsername());
@@ -29,7 +29,7 @@ public class UserController {
   }
 
   @PostMapping("/register")
-  public ResponseEntity<ApiResponse<Void>> register(@RequestBody UserDto userDto) {
+  public ResponseEntity<ApiResponse<Void>> register(@Valid @RequestBody UserDto userDto) {
     userService.registerUser(userDto);
     return ResponseEntity
       .status(HttpStatus.CREATED)
@@ -37,24 +37,22 @@ public class UserController {
   }
 
   @PostMapping("/login")
-  public ResponseEntity<ApiResponse<String>> login(@RequestBody LoginRequestDto requestDto) {
+  public ResponseEntity<ApiResponse<String>> login(@Valid @RequestBody LoginRequestDto requestDto) {
     String token = userService.login(requestDto);
     return ResponseEntity
       .status(HttpStatus.OK)
       .body(ApiResponse.success("유저 로그인 성공", token));
   }
 
-  @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-  @PatchMapping("/updateName")
-  public ResponseEntity<ApiResponse<Void>> updateName(@RequestParam Long userId, @RequestParam String userName) {
-    userService.updateUserName(userId, userName);
+  @PatchMapping
+  public ResponseEntity<ApiResponse<Void>> updateName(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestParam String userName) {
+    userService.updateUserName(userDetails.getUser().getId(), userName);
     return ResponseEntity.ok(ApiResponse.success("유저 이름 수정 성공"));
   }
 
-  @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-  @PutMapping("/update")
-  public ResponseEntity<ApiResponse<Void>> update(@RequestParam Long userId, @RequestBody UserDto userDto) {
-    userService.updateUserDetail(userId, userDto);
+  @PutMapping
+  public ResponseEntity<ApiResponse<Void>> update(@AuthenticationPrincipal CustomUserDetails userDetails, @Valid @RequestBody UserDto userDto) {
+    userService.updateUserDetail(userDetails.getUser().getId(), userDto);
     return ResponseEntity.ok(ApiResponse.success("유저 정보 수정 성공"));
   }
 }

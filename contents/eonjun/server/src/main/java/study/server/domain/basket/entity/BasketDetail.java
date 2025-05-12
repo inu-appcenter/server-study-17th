@@ -2,12 +2,7 @@ package study.server.domain.basket.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import study.server.domain.basic.BaseEntity;
-
-import java.time.LocalDateTime;
+import study.server.global.common.BaseEntity;
 
 @Entity
 @Getter

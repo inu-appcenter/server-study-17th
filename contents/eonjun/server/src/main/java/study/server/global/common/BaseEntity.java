@@ -1,4 +1,4 @@
-package study.server.domain.basic;
+package study.server.global.common;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
