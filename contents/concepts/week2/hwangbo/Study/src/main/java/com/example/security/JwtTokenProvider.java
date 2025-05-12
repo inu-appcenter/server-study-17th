@@ -7,11 +7,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;          // ← 주입용 @Value
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 
@@ -70,7 +72,10 @@ public class JwtTokenProvider {
         UserDetails userDetails =
                 userDetailsService.loadUserByUsername(username);
 
+
+        Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+
         return new UsernamePasswordAuthenticationToken(
-                userDetails, token, Collections.emptyList());
+                userDetails, token, authorities);
     }
 }

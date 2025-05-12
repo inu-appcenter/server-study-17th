@@ -5,11 +5,11 @@ import lombok.Getter;
 
 @Getter
 public class UserResponse {
-    private String name;
+    private String accessToken;
 
 
-    public UserResponse(String name) {
-        this.name = name;
+    public UserResponse(String accessToken) {
+        this.accessToken = accessToken;
     }
 
     public static UserResponse get(User user) {
