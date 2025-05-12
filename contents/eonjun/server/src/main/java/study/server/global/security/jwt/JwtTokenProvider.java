@@ -7,7 +7,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import study.server.global.security.CustomUserDetails;
+import study.server.domain.user.entity.CustomUserDetails;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
@@ -48,10 +48,9 @@ public class JwtTokenProvider {
   // 토큰 유효성 검증
   public boolean validateToken(String token) {
     try {
-      Key key = getSigningKey();
-
+      // todo : getClaims 로 바꾸기
       Jwts.parserBuilder()
-        .setSigningKey(key)  // 서명 키 설정
+        .setSigningKey(getSigningKey())  // 서명 키 설정
         .build()
         .parseClaimsJws(token);  // 토큰 파싱
       return true;
