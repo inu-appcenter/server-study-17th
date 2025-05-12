@@ -18,3 +18,8 @@ spring:
 
   jwt:
     secret: mysosupersecretkeyqzwxecrv041256842012347+/mysosupersecretkeyqzwxecrv041256842012347+/
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE

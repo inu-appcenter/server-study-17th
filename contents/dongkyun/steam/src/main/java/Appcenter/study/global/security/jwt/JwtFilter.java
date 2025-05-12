@@ -30,8 +30,11 @@ public class JwtFilter extends OncePerRequestFilter {
         if (requestURI.startsWith("/api/member/signup")
                 || requestURI.startsWith("/api/member/login")
                 || requestURI.startsWith("/api/member/email")
-                || requestURI.startsWith("/api/member/nickname")) {
+                || requestURI.startsWith("/api/member/nickname")
+                || requestURI.startsWith("/swagger-ui")
+                || requestURI.startsWith("/v3/api-docs")) {
             filterChain.doFilter(request, response);
+            return;
         }
 
         // JWT 토큰이 존재하고 유효하면 인증 객체를 SecurityContext에 저장
