@@ -20,7 +20,6 @@ public class TicketController {
 
     private final TicketService ticketService;
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<TicketCreateResponseDto> create(@Valid @RequestBody TicketCreateRequestDto requestDto) {
         return ResponseEntity.ok(ticketService.create(requestDto));
@@ -36,7 +35,6 @@ public class TicketController {
         return ResponseEntity.ok(ticketService.getTicketList());
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<TicketUpdateResponseDto> update(
             @PathVariable Long id,
@@ -44,7 +42,6 @@ public class TicketController {
         return ResponseEntity.ok(ticketService.update(id, requestDto));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         ticketService.delete(id);

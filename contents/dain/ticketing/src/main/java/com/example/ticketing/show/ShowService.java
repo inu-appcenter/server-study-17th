@@ -7,8 +7,8 @@ import com.example.ticketing.show.dto.req.ShowUpdateRequestDto;
 import com.example.ticketing.show.dto.res.ShowCreateResponseDto;
 import com.example.ticketing.show.dto.res.ShowGetResponseDto;
 import com.example.ticketing.show.dto.res.ShowUpdateResponseDto;
-import com.example.ticketing.ticket.dto.res.TicketCreateResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

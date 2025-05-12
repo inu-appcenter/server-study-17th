@@ -6,6 +6,6 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum Role {
-    ROLE_ADMIN,
+    ROLE_ADMIN, //ROLE 이미 있음 prefix
     ROLE_USER
 }

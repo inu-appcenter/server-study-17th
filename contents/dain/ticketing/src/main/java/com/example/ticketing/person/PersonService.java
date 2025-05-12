@@ -9,8 +9,12 @@ import com.example.ticketing.person.dto.res.PersonGetResponseDto;
 import com.example.ticketing.person.dto.res.PersonLoginResponseDto;
 import com.example.ticketing.person.dto.res.PersonSignupResponseDto;
 import com.example.ticketing.person.dto.res.PersonUpdateResponseDto;
+import com.example.ticketing.security.CustomUserDetails;
 import com.example.ticketing.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +42,7 @@ public class PersonService {
                 .password(passwordEncoder.encode(personSignupRequestDto.getPassword()))
                 .createdDate(LocalDateTime.now())
                 .role(Role.ROLE_USER) // USER 권한 부여
+                .grade(Grade.WELCOME) // 최초 등급 WELCOME 부여
                 .build();
         personRepository.save(person);
         return PersonSignupResponseDto.from(person);
@@ -57,37 +62,43 @@ public class PersonService {
         return PersonLoginResponseDto.from(person, token);
     }
 
-    //회원 정보(전체) 수정
+    //회원 정보 수정
     @Transactional
-    public PersonUpdateResponseDto update(Long personId, PersonUpdateRequestDto personUpdateRequestDto) {
-        Person existingPerson = personRepository.findById(personId)
-                .orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
-        existingPerson.update(personUpdateRequestDto);
-        return PersonUpdateResponseDto.from(existingPerson);
+    public PersonUpdateResponseDto update(UserDetails user, PersonUpdateRequestDto dto) {
+        //loginId 꺼내기
+        String username = user.getUsername();
+
+        //loginId로 조회
+        Person existing = personRepository.findByLoginId(username)
+                        .orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
+        existing.update(dto);
+        return PersonUpdateResponseDto.from(existing);
     }
 
     //전체 회원 조회
     @Transactional(readOnly = true)
     public List<PersonGetResponseDto> getPersonList() {
-        return personRepository.findAll().stream() //Stream API 활용
+        return personRepository.findAll().stream() //Stream API 활용 -> findAll() 대신 동적쿼리(JPQL)로 DB에서 가져오기
                 .map(PersonGetResponseDto::from)
                 .toList();
     }
 
     //개별 회원 조회
     @Transactional(readOnly = true)
-    public PersonGetResponseDto getPerson(Long personId) {
-        Person person = personRepository.findById(personId)
+    public PersonGetResponseDto getPerson(UserDetails user) {
+        String username = user.getUsername();
+        Person existing = personRepository.findByLoginId(username)
                 .orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
-        return PersonGetResponseDto.from(person);
+        return PersonGetResponseDto.from(existing);
     }
 
     //회원 삭제
     @Transactional
-    public void delete(Long personId) {
-        Person person = personRepository.findById(personId)
-                .orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
-        personRepository.delete(person);
+    public void delete(UserDetails user) {
+        String username = user.getUsername();
+        Person existing = personRepository.findByLoginId(username)
+                        .orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
+        personRepository.delete(existing);
     }
 }
 
