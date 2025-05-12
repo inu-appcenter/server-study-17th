@@ -39,7 +39,7 @@ public class Product {
     private User user;
 
     @Builder
-    private Product(Long postId, Long price, String title, String description, String location, Long heart, int productState, User user) {
+    private Product(Long postId, Long price, String title, String description, String location, Long heart, Integer productState, User user) {
         this.postId = postId;
         this.price = price;
         this.title = title;
@@ -50,7 +50,7 @@ public class Product {
         this.user = user;
     }
 
-    public Product update(Long price, String title, String description, String location, Long heart, int productState, User user) {
+    public Product update(Long price, String title, String description, String location, Long heart, Integer productState, User user) {
         this.price = price;
         this.title = title;
         this.description = description;
