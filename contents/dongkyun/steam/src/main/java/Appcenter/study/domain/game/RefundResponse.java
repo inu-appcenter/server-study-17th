@@ -1,4 +1,4 @@
-package Appcenter.study.domain.purchase;
+package Appcenter.study.domain.game;
 
 import lombok.Builder;
 import lombok.Getter;

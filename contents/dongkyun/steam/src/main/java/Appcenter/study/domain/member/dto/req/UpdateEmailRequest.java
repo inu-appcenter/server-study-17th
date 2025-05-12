@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UpdateEmailRequest {
 
-    @NotBlank(message = "이메일은 비어 있을 수 없습니다.")
-    @Email(message = "올바른 이메일 형식이 아닙니다.")
+    @NotBlank(message = "이메일이 비어있습니다.")
+    @Email(message = "유효한 이메일 주소를 입력해주세요.")
     private String email;
 }

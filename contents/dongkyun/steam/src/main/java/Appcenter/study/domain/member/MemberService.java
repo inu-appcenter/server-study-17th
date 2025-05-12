@@ -84,7 +84,7 @@ public class MemberService {
     @Transactional
     public UpdateMypageResponse updateMypage(UserDetailsImpl userDetails, UpdateMypageRequest updateMypageRequest) {
         Member member = memberRepository.findById(userDetails.getMember().getId())
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
         member.updateMypage(updateMypageRequest);
         log.info("updateMypage");
@@ -95,7 +95,7 @@ public class MemberService {
     @Transactional
     public UpdateEmailResponse updateEmail(UserDetailsImpl userDetails, UpdateEmailRequest updateEmailRequest) {
         Member member = memberRepository.findById(userDetails.getMember().getId())
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
         member.updateEmail(updateEmailRequest);
         log.info("updateEmail");

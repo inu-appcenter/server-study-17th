@@ -1,9 +1,10 @@
 package Appcenter.study.domain.game;
 
 import Appcenter.study.domain.member.Member;
-import Appcenter.study.domain.purchase.RefundResponse;
 import Appcenter.study.domain.member.MemberRepository;
 import Appcenter.study.domain.purchase.PurchaseRepository;
+import Appcenter.study.global.exception.CustomException;
+import Appcenter.study.global.exception.ErrorCode;
 import Appcenter.study.global.security.jwt.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +23,7 @@ public class GameService {
     @Transactional(readOnly = true)
     public GameInfoResponse getGameInfo(Long gameId) {
         Game game = gameRepository.findById(gameId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게임이 존재하지 않습니다. ID = " + gameId));
+                .orElseThrow(() -> new CustomException(ErrorCode.GAME_NOT_FOUND));
 
         return GameInfoResponse.builder().game(game).build();
     }
@@ -30,9 +31,9 @@ public class GameService {
     @Transactional
     public RefundResponse refund(UserDetailsImpl userDetails, Long gameId) {
         Member member = memberRepository.findById(userDetails.getMember().getId())
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다"));
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         Game game = gameRepository.findById(gameId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게임이 존재하지 않습니다. ID=" + gameId));
+                .orElseThrow(() -> new CustomException(ErrorCode.GAME_NOT_FOUND));
 
         purchaseRepository.deleteByMemberAndGame(member, game);
         log.info("delete purchase");

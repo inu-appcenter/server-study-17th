@@ -9,10 +9,10 @@ import org.hibernate.validator.constraints.URL;
 @NoArgsConstructor
 public class UpdateMypageRequest {
 
-    @NotBlank(message = "닉네임은 비어 있을 수 없습니다.")
+    @NotBlank(message = "닉네임이 비어있습니다.")
     private String nickname;
 
-    @NotBlank(message = "위치는 비어 있을 수 없습니다.")
+    @NotBlank(message = "위치가 비어있습니다.")
     private String location;
 
     @URL(message = "유효한 URL 형식이 아닙니다.")
