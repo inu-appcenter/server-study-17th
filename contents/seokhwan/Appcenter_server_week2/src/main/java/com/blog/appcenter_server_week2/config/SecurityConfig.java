@@ -26,19 +26,23 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/api/users/signup","api/users/login").permitAll().anyRequest().authenticated())//.hasRole()로 관리하기 권한에 따라 접근할 수 있도록
+                        // Swagger UI 경로 허용
+                        .requestMatchers("/swagger-ui/**").permitAll()
+                        .requestMatchers("/v3/api-docs/**").permitAll()
+                        .requestMatchers("/swagger-resources/**").permitAll()
+                        .requestMatchers("/swagger-ui.html").permitAll()
+                        .requestMatchers("/webjars/**").permitAll()
+                        // API 경로 허용
+                        .requestMatchers("/api/users/signup", "/api/users/login").permitAll()
+                        .anyRequest().authenticated())//.hasRole()로 관리, 권한에 따라 접근할 수 있도록 추후 변경
                 .sessionManagement(sessionManagement -> sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(new JwtTokenFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class); //Jwt 필터
         return http.build();
     }
 
-
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-
-
 }
