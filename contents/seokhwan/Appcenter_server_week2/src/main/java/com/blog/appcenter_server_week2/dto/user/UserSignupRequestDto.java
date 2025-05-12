@@ -9,19 +9,19 @@ import jakarta.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class UserSignupRequestDto {
 
-    @NotBlank
+    @NotBlank(message = "아이디를 입력하세요")
     private String loginId;
 
-    @NotBlank
+    @NotBlank(message = "이름을 입력하세요")
     private String username;
 
-    @NotBlank
+    @NotBlank(message = "비밀번호를 입력하세요")
     private String password;
 
-    @NotBlank
+    @NotBlank(message = "닉네임을 입력하세요")
     private String nickname;
 
-    @NotBlank
+    @NotBlank(message = "주소를 입력하세요")
     private String location;
 
     private String profileUrl;

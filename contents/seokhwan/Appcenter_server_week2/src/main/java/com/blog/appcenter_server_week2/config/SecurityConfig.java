@@ -26,7 +26,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/api/users/signup","api/users/login").permitAll().anyRequest().authenticated())
+                        .requestMatchers("/api/users/signup","api/users/login").permitAll().anyRequest().authenticated())//.hasRole()로 관리하기 권한에 따라 접근할 수 있도록
                 .sessionManagement(sessionManagement -> sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(new JwtTokenFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class); //Jwt 필터
