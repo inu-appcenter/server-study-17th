@@ -9,11 +9,9 @@ import com.example.ticketing.person.dto.res.PersonGetResponseDto;
 import com.example.ticketing.person.dto.res.PersonLoginResponseDto;
 import com.example.ticketing.person.dto.res.PersonSignupResponseDto;
 import com.example.ticketing.person.dto.res.PersonUpdateResponseDto;
-import com.example.ticketing.security.CustomUserDetails;
 import com.example.ticketing.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PersonService {
@@ -33,7 +32,9 @@ public class PersonService {
     //회원가입
     @Transactional
     public PersonSignupResponseDto signup(PersonSignupRequestDto personSignupRequestDto) {
+        log.info("[회원가입 시도] loginId: {}", personSignupRequestDto.getLoginId());
         if (personRepository.existsByLoginId(personSignupRequestDto.getLoginId())) {
+            log.warn("[회원가입 실패] 중복된 loginId: {}", personSignupRequestDto.getLoginId());
             throw new CustomException(ErrorCode.DUPLICATE_LOGIN_ID);
         }
 
@@ -45,20 +46,27 @@ public class PersonService {
                 .grade(Grade.WELCOME) // 최초 등급 WELCOME 부여
                 .build();
         personRepository.save(person);
+        log.info("[회원가입 성공] loginId: {}", person.getLoginId());
         return PersonSignupResponseDto.from(person);
     }
 
     //로그인
     @Transactional
     public PersonLoginResponseDto login(PersonLoginRequestDto personLoginRequestDto) {
+        log.info("[로그인 시도] loginId: {}", personLoginRequestDto.getLoginId());
         Person person = personRepository.findByLoginId(personLoginRequestDto.getLoginId())
-                .orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
+                .orElseThrow(() -> {
+                    log.warn("[로그인 실패] 존재하지 않는 ID: {}", personLoginRequestDto.getLoginId());
+                    return new CustomException(ErrorCode.ID_NOT_FOUND);
+                });
 
         if (!passwordEncoder.matches(personLoginRequestDto.getPassword(), person.getPassword())) {
+            log.warn("[로그인 실패] 비밀번호 불일치 - loginId: {}", personLoginRequestDto.getLoginId());
             throw new CustomException(ErrorCode.UNAUTHORIZED_LOGIN);
         }
         // 토큰 생성
         String token = jwtTokenProvider.generateAccessToken(person.getLoginId());
+        log.info("[로그인 성공] loginId: {}", person.getLoginId());
         return PersonLoginResponseDto.from(person, token);
     }
 
@@ -67,11 +75,16 @@ public class PersonService {
     public PersonUpdateResponseDto update(UserDetails user, PersonUpdateRequestDto dto) {
         //loginId 꺼내기
         String username = user.getUsername();
+        log.info("[회원정보 수정 시도] loginId: {}", username);
 
         //loginId로 조회
         Person existing = personRepository.findByLoginId(username)
-                        .orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
+                        .orElseThrow(() -> {
+                            log.warn("[회원정보 수정 실패] 존재하지 않는 ID: {}", username);
+                            return new CustomException(ErrorCode.ID_NOT_FOUND);
+                        });
         existing.update(dto);
+        log.info("[회원정보 수정 성공] loginId: {}", username);
         return PersonUpdateResponseDto.from(existing);
     }
 
@@ -96,9 +109,14 @@ public class PersonService {
     @Transactional
     public void delete(UserDetails user) {
         String username = user.getUsername();
+        log.info("[회원 삭제 시도] loginId: {}", username);
         Person existing = personRepository.findByLoginId(username)
-                        .orElseThrow(() -> new CustomException(ErrorCode.ID_NOT_FOUND));
+                        .orElseThrow(() -> {
+                            log.warn("[회원 삭제 실패] 존재하지 않는 ID: {}", username);
+                            return new CustomException(ErrorCode.ID_NOT_FOUND);
+                        });
         personRepository.delete(existing);
+        log.info("[회원 삭제 성공] loginId: {}", username);
     }
 }
 
