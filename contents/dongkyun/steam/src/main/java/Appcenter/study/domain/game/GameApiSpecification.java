@@ -8,8 +8,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Tag(name = "Game", description = "게임 관련 API")
@@ -30,7 +28,6 @@ public interface GameApiSpecification {
                     @ApiResponse(responseCode = "404", description = "게임을 찾을 수 없음")
             }
     )
-    @GetMapping
     ResponseEntity<GameInfoResponse> getGameInfo(@PathVariable Long gameId);
 
     @Operation(
@@ -49,6 +46,5 @@ public interface GameApiSpecification {
                     @ApiResponse(responseCode = "404", description = "해당 구매 정보를 찾을 수 없음")
             }
     )
-    @DeleteMapping
     ResponseEntity<RefundResponse> refund(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long gameId);
 }

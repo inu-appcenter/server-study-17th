@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Tag(name = "Cart", description = "장바구니 관련 API")
 public interface CartApiSpecification {
@@ -31,6 +30,5 @@ public interface CartApiSpecification {
                     @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자")
             }
     )
-    @PostMapping
     ResponseEntity<CartResponse> addCart(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long gameId);
 }

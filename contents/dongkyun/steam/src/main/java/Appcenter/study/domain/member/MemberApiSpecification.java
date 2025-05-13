@@ -33,7 +33,6 @@ public interface MemberApiSpecification {
                     )
             }
     )
-    @PostMapping
     ResponseEntity<SignupResponseDto> signup(@Valid @RequestBody SignupRequestDto signupRequestDto);
 
     @Operation(
@@ -48,7 +47,6 @@ public interface MemberApiSpecification {
                     @ApiResponse(responseCode = "401", description = "로그인 실패 - 잘못된 자격 증명")
             }
     )
-    @PostMapping
     ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto);
 
     @Operation(
@@ -63,7 +61,6 @@ public interface MemberApiSpecification {
                     @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자")
             }
     )
-    @PutMapping
     ResponseEntity<UpdateMypageResponse> updateMypage(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @Valid @RequestBody UpdateMypageRequest updateMypageRequest);
@@ -80,7 +77,6 @@ public interface MemberApiSpecification {
                     @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자")
             }
     )
-    @PatchMapping("/email/update")
     ResponseEntity<UpdateEmailResponse> updateEmail(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @Valid @RequestBody UpdateEmailRequest updateEmailRequest);
@@ -93,7 +89,6 @@ public interface MemberApiSpecification {
                     @ApiResponse(responseCode = "400", description = "이메일이 중복되었습니다.")
             }
     )
-    @GetMapping("/email/{email}")
     ResponseEntity<Boolean> checkEmailDuplicated(@PathVariable String email);
 
     @Operation(
@@ -104,6 +99,5 @@ public interface MemberApiSpecification {
                     @ApiResponse(responseCode = "400", description = "닉네임이 중복되었습니다.")
             }
     )
-    @GetMapping("/nickname/{nickname}")
     ResponseEntity<Boolean> checkNicknameDuplicated(@PathVariable String nickname);
 }
