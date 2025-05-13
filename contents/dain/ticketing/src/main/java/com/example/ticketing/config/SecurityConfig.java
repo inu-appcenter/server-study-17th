@@ -44,7 +44,7 @@ public class SecurityConfig {
                 // shows 생성, 수정, 삭제는 ADMIN만 허용
                 // tickets 생성, 수정, 삭제는 ADMIN만 허용
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/persons/signup", "/api/persons/login").permitAll()
+                        .requestMatchers("/api/persons/signup", "/api/persons/login", "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/shows").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT,"/api/shows/*").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE,"/api/shows/*").hasRole("ADMIN")
