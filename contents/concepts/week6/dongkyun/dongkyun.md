@@ -172,7 +172,7 @@
 
             1. 여담으로 import 할 때
 
-               ![스크린샷 2025-05-12 오후 8.59.46.png](Logging%20&%20Swagger%201f19c68dfea9803d95b8d0fd698d6413/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2025-05-12_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_8.59.46.png)
+               ![스크린샷 2025-05-13 오후 2.06.44.png](%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202025-05-13%20%EC%98%A4%ED%9B%84%202.06.44.png)
 
                 1. annotations가 아닌 models로 해야한다…
                 2. annotations는 **컨트롤러 메서드나 클래스에 어노테이션으로 붙이는 경우** 사용
@@ -223,8 +223,48 @@
             
             → Swagger 설정에 대한 부분만 따로 파일을 만들어 컨트롤러는 깔끔하게 만드는 방법도 존재
             
-            - 
-        
+            - swagger 문서화만 정리해놓은 인터페이스를 생성
+
+                ```java
+                @Tag(name = "Cart", description = "장바구니 관련 API")
+                public interface CartApiSpecification {
+                
+                    @Operation(
+                            summary = "장바구니 추가",
+                            description = "게임 ID를 받아 해당 게임을 현재 로그인한 사용자의 장바구니에 추가합니다.",
+                            responses = {
+                                    // 201 Created 응답일 때
+                                    @ApiResponse(
+                                            responseCode = "201",
+                                            description = "장바구니에 성공적으로 추가됨",
+                                            // 응답 본문은 JSON 형식이고, 구조는 CartResponse DTO를 따름
+                                            content = @Content(
+                                                    mediaType = "application/json",
+                                                    schema = @Schema(implementation = CartResponse.class)
+                                            )
+                                    ),
+                                    @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자")
+                            }
+                    )
+                    @PostMapping
+                    ResponseEntity<CartResponse> addCart(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long gameId);
+                }
+                
+                ```
+
+            - 컨트롤러에서 이를 상속 받는다
+
+                ```java
+                // ...
+                public class CartController implements CartApiSpecification {
+                    // ...
+                		@PostMapping("/{gameId}")
+                    public ResponseEntity<CartResponse> addCart(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long gameId) {
+                        return ResponseEntity.status(HttpStatus.CREATED).body(cartService.addCart(userDetails, gameId));
+                    }
+                }
+                ```
+
     3. DTO 
         1. @Schema → DTO 필드에 대한 설명 및 예시
             
