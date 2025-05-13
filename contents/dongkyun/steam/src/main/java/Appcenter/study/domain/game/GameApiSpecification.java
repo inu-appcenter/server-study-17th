@@ -46,8 +46,7 @@ public interface GameApiSpecification {
                             )
                     ),
                     @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자"),
-                    @ApiResponse(responseCode = "404", description = "해당 게임을 찾을 수 없음"),
-                    @ApiResponse(responseCode = "400", description = "환불 불가 조건")
+                    @ApiResponse(responseCode = "404", description = "해당 구매 정보를 찾을 수 없음")
             }
     )
     @DeleteMapping

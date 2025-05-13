@@ -2,6 +2,7 @@ package Appcenter.study.domain.game;
 
 import Appcenter.study.domain.member.Member;
 import Appcenter.study.domain.member.MemberRepository;
+import Appcenter.study.domain.purchase.Purchase;
 import Appcenter.study.domain.purchase.PurchaseRepository;
 import Appcenter.study.global.exception.CustomException;
 import Appcenter.study.global.exception.ErrorCode;
@@ -10,6 +11,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.swing.text.html.Option;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -51,7 +55,13 @@ public class GameService {
                     return new CustomException(ErrorCode.GAME_NOT_FOUND);
                 });
 
-        purchaseRepository.deleteByMemberAndGame(member, game);
+        Optional<Purchase> purchase = purchaseRepository.findByMemberAndGame(member, game);
+        if (purchase.isPresent())
+            purchaseRepository.delete(purchase.get());
+        else {
+            log.warn("[환불 실패] 존재하지 않는 구매 정보");
+            throw new CustomException(ErrorCode.PURCHASE_NOT_FOUND);
+        }
 
         log.info("[환불 성공] memberId={}, nickname={}, gameId={}, title={}",
                 member.getId(), member.getNickname(), game.getId(), game.getTitle());

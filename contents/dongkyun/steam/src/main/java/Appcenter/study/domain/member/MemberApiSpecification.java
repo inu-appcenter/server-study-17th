@@ -89,7 +89,8 @@ public interface MemberApiSpecification {
             summary = "이메일 중복 확인 [ JWT ❌ ]",
             description = "이메일이 이미 존재하는지 확인합니다.",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "사용 가능 여부 반환")
+                    @ApiResponse(responseCode = "200", description = "사용 가능 여부 반환"),
+                    @ApiResponse(responseCode = "400", description = "이메일이 중복되었습니다.")
             }
     )
     @GetMapping("/email/{email}")
@@ -99,7 +100,8 @@ public interface MemberApiSpecification {
             summary = "닉네임 중복 확인 [ JWT ❌ ]",
             description = "닉네임이 이미 존재하는지 확인합니다.",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "사용 가능 여부 반환")
+                    @ApiResponse(responseCode = "200", description = "사용 가능 여부 반환"),
+                    @ApiResponse(responseCode = "400", description = "닉네임이 중복되었습니다.")
             }
     )
     @GetMapping("/nickname/{nickname}")
