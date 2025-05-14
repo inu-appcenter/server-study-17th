@@ -1,12 +1,10 @@
-package study.server.global.security;
+package study.server.domain.user.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
-import study.server.domain.user.entity.User;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import study.server.domain.user.entity.Role;
 
 import java.util.Collection;
 import java.util.Collections;

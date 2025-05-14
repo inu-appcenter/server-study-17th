@@ -10,8 +10,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import study.server.global.security.CustomUserDetails;
-import study.server.global.security.CustomUserDetailsService;
+import study.server.domain.user.entity.CustomUserDetails;
+import study.server.domain.user.service.CustomUserDetailsService;
 
 import java.io.IOException;
 
