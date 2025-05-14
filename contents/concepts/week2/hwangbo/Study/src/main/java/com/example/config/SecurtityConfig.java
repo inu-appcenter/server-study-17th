@@ -5,6 +5,7 @@ import com.example.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -40,16 +41,32 @@ public class SecurtityConfig {
                 .cors(cors -> cors.disable())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                // 접근 제어
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/",
-                                "/users/",
                                 "/users/join",
-                                "/users/login"
+                                "/users/login",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/v3/api-docs/**",
+                                "/swagger-resources/**",
+                                "/webjars/**"
                         ).permitAll()
-                        .anyRequest().authenticated())
-                //JWT 필터 삽입
+
+
+                        .requestMatchers(HttpMethod.POST,   "/products").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH,  "/products/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/products/**").hasRole("ADMIN")
+
+                        .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
+
+                        .requestMatchers("/carts/**").hasRole("USER")
+
+                        .requestMatchers(HttpMethod.PATCH, "/users").hasRole("USER")
+
+                        .anyRequest().authenticated()
+                )
+                // JWT 필터를 UsernamePasswordAuthenticationFilter 앞에 삽입
                 .addFilterBefore(new JwtTokenFilter(jwtTokenProvider),
                         UsernamePasswordAuthenticationFilter.class);
 
