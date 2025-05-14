@@ -101,3 +101,5 @@ public interface MemberApiSpecification {
     )
     ResponseEntity<Boolean> checkNicknameDuplicated(@PathVariable String nickname);
 }
+
+
