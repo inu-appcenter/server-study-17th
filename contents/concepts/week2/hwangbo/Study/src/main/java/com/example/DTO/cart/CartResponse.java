@@ -1,10 +1,8 @@
-package com.example.DTO;
+package com.example.DTO.cart;
 
 import com.example.domain.cart.Cart;
 import com.example.domain.cart.CartItem;
-import com.example.domain.cart.CartRepository;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;

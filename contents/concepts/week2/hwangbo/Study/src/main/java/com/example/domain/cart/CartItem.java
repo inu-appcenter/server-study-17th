@@ -22,4 +22,14 @@ public class CartItem {
 
     private int quantity;
 
+    public CartItem(Product product, Cart cart, int quantity) {
+        this.product  = product;
+        this.cart     = cart;
+        this.quantity = quantity;
+    }
+
+    public void updateQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
 }
