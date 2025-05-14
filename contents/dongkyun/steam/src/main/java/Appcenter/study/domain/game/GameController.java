@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/game")
-public class GameController {
+public class GameController implements GameApiSpecification {
 
     private final GameService gameService;
 
