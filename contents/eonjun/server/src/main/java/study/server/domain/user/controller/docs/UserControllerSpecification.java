@@ -25,8 +25,7 @@ public interface UserControllerSpecification {
       @ApiResponse(responseCode = "200", description = "유저 조회 성공",
         content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
           schema = @Schema(implementation = UserResponseDto.class))),
-      @ApiResponse(responseCode = "400", description = "잘못된 요청 데이터"),
-      @ApiResponse(responseCode = "409", description = "중복된 데이터")
+      @ApiResponse(responseCode = "400", description = "잘못된 요청 데이터")
     })
   @GetMapping
   ResponseEntity<ResponseDto<UserResponseDto>> userDetail(@AuthenticationPrincipal CustomUserDetails userDetails);
@@ -48,7 +47,8 @@ public interface UserControllerSpecification {
       content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
         schema = @Schema(implementation = UserResponseDto.class))),
     @ApiResponse(responseCode = "400", description = "잘못된 요청 데이터"),
-    @ApiResponse(responseCode = "409", description = "중복된 데이터")
+    @ApiResponse(responseCode = "USER409_1", description = "이미 등록된 이메일입니다."),
+    @ApiResponse(responseCode = "USER409_2", description = "이미 등록된 이름입니다.")
   })
   @PostMapping("/register")
   ResponseEntity<ResponseDto<Void>> register(@Valid @RequestBody UserDto userDto);
@@ -81,7 +81,7 @@ public interface UserControllerSpecification {
   @ApiResponses({
     @ApiResponse(responseCode = "200", description = "이름 수정 성공"),
     @ApiResponse(responseCode = "400", description = "잘못된 요청 데이터"),
-    @ApiResponse(responseCode = "409", description = "중복된 데이터")
+    @ApiResponse(responseCode = "USER409_2", description = "이미 등록된 이름입니다.")
   })
   @PatchMapping
   ResponseEntity<ResponseDto<Void>> updateName(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestParam String userName);

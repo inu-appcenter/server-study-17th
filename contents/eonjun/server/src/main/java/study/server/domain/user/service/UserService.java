@@ -17,8 +17,7 @@ import study.server.global.exception.CustomException;
 import study.server.domain.user.entity.CustomUserDetails;
 import study.server.global.security.jwt.JwtTokenProvider;
 
-import static study.server.global.exception.ErrorCode.EMAIL_DUPLICATED;
-import static study.server.global.exception.ErrorCode.USER_NOT_FOUND;
+import static study.server.global.exception.ErrorCode.*;
 
 @Slf4j
 @Service
@@ -52,6 +51,11 @@ public class UserService {
     // 이메일 중복 확인
     if (userRepository.existsByEmail(userDto.getEmail())) {
       throw new CustomException(EMAIL_DUPLICATED); // 이미 등록된 이메일이 있을 경우 예외 던짐
+    }
+
+    // 유저 이름 중복 확인
+    if (userRepository.existsByUsername(userDto.getUsername())) {
+      throw new CustomException(USERNAME_DUPLICATED); // 이미 등록된 이름이 있을 경우 예외 던짐
     }
 
     log.info("Registering user : {}", userDto);
