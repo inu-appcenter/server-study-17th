@@ -1,9 +1,9 @@
 package com.example.service;
 
-import com.example.DTO.user.UserLogInRequest;
-import com.example.DTO.user.UserResponse;
-import com.example.DTO.user.UserSignupRequest;
-import com.example.DTO.user.UserUpdateRequest;
+import com.example.dto.user.UserLogInRequest;
+import com.example.dto.user.UserResponse;
+import com.example.dto.user.UserSignupRequest;
+import com.example.dto.user.UserUpdateRequest;
 import com.example.domain.user.User;
 import com.example.domain.user.UserRepository;
 import com.example.exception.CustomException;
@@ -31,6 +31,17 @@ public class UserService {
 
     public User createUser(UserSignupRequest request) {
         log.info("회원 가입 요청 → email={}", request.getEmail());
+
+        // 이메일 중복 검증
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new CustomException(ErrorCode.EMAIL_DUPLICATED);
+        }
+
+        // 비밀번호 재입력 검증
+        if (!request.getPassword().equals(request.getPasswordCheck())) {
+            throw new CustomException(ErrorCode.PASSWORD_MISMATCH);
+        }
+
         User user = new User(
                 request.getEmail(),
                 passwordEncoder.encode(request.getPassword()),

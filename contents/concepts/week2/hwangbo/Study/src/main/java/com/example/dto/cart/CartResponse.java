@@ -1,4 +1,4 @@
-package com.example.DTO.cart;
+package com.example.dto.cart;
 
 import com.example.domain.cart.Cart;
 import com.example.domain.cart.CartItem;

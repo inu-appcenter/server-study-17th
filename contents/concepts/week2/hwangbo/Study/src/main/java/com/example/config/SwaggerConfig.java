@@ -37,7 +37,6 @@ public class SwaggerConfig {
         SecurityRequirement securityRequirement = new SecurityRequirement()
                 .addList("bearerAuth");
 
-        // OpenAPI 객체 구성
         return new OpenAPI()
                 .info(info)
                 .servers(List.of(localServer))

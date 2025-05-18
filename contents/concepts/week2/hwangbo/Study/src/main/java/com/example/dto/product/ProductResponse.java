@@ -1,4 +1,4 @@
-package com.example.DTO.product;
+package com.example.dto.product;
 
 import com.example.domain.product.Product;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com.example.DTO.user;
+package com.example.dto.user;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
@@ -9,7 +9,8 @@ import lombok.Getter;
 @Getter
 public class UserLogInRequest {
 
-    @Email
+    @NotBlank(message = "이메일은 필수로 입력해야 합니다.")
+    @Email(message = "이메일 형식에 맞지 않습니다.")
     @Schema(description = "사용자 이메일", example = "user@example.com")
     private String email;
 

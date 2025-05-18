@@ -1,12 +1,12 @@
 package com.example.service;
 
-import com.example.DTO.cart.CartItemRequest;
-import com.example.DTO.cart.CartItemUpdateRequest;
-import com.example.DTO.cart.CartResponse;
 import com.example.domain.cart.Cart;
 import com.example.domain.cart.CartItem;
 import com.example.domain.cart.CartRepository;
 import com.example.domain.product.Product;
+import com.example.dto.cart.CartItemRequest;
+import com.example.dto.cart.CartItemUpdateRequest;
+import com.example.dto.cart.CartResponse;
 import com.example.exception.CustomException;
 import com.example.exception.ErrorCode;
 import jakarta.transaction.Transactional;
@@ -37,7 +37,7 @@ public class CartService {
                 userId, req.getProductId(), req.getQuantity());
         Cart cart = cartRepository.findByUserId(userId)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
-        Product product = productService.findById(req.getProductId());
+        Product product = productService.findProductEntityById(req.getProductId());
 
         Optional<CartItem> existing = cart.getItems().stream()
                 .filter(i -> i.getProduct().getId().equals(product.getId()))
@@ -51,7 +51,7 @@ public class CartService {
             log.info("기존 품목 수량 합산 → itemId={}, newQuantity={}", item.getId(), newQuantity);
         }
 
-        // 기존에 존재하지 않는 사움인 경우
+        // 기존에 존재하지 않는 상품인 경우
         else {
             CartItem item = new CartItem(product, cart, req.getQuantity());
             cart.getItems().add(item);
