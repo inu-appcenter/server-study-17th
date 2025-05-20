@@ -1,6 +1,7 @@
 package study.server.domain.user.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,12 +14,12 @@ import study.server.domain.user.dto.UserResponseDto;
 import study.server.domain.user.entity.User;
 import study.server.domain.user.repository.UserRepository;
 import study.server.global.exception.CustomException;
-import study.server.global.security.CustomUserDetails;
+import study.server.domain.user.entity.CustomUserDetails;
 import study.server.global.security.jwt.JwtTokenProvider;
 
-import static study.server.global.exception.ErrorCode.EMAIL_DUPLICATED;
-import static study.server.global.exception.ErrorCode.USER_NOT_FOUND;
+import static study.server.global.exception.ErrorCode.*;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -31,8 +32,10 @@ public class UserService {
   private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
   public UserResponseDto getUserDetail(String email) {
+    log.info("Getting user details for email : {}", email);
     User user = userRepository.findByEmail(email)
       .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+    log.debug("Found user : {}", user);
 
     return UserResponseDto.builder()
       .username(user.getUsername())
@@ -50,6 +53,12 @@ public class UserService {
       throw new CustomException(EMAIL_DUPLICATED); // 이미 등록된 이메일이 있을 경우 예외 던짐
     }
 
+    // 유저 이름 중복 확인
+    if (userRepository.existsByUsername(userDto.getUsername())) {
+      throw new CustomException(USERNAME_DUPLICATED); // 이미 등록된 이름이 있을 경우 예외 던짐
+    }
+
+    log.info("Registering user : {}", userDto);
     userRepository.save(User.builder()
       .username(userDto.getUsername())
       .email(userDto.getEmail())
@@ -71,22 +80,28 @@ public class UserService {
       .map(CustomUserDetails::new)
       .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
 
-    return jwtTokenProvider.generateToken(userDetails);
+    String token = jwtTokenProvider.generateToken(userDetails);
+    log.debug("Generated token : {}", token);
+    log.info("User login : {}", requestDto.getEmail());
+
+    return token;
   }
 
   @Transactional
-  public void deleteUser(long userId) {
-    User user = userRepository.findById(userId)
+  public void deleteUser(Long userId) {
+    userRepository.findById(userId)
       .orElseThrow(() -> new CustomException(USER_NOT_FOUND));  // 삭제할 유저가 없으면 예외 던짐
 
+    log.info("Deleting user : {}", userId);
     userRepository.deleteById(userId);
   }
 
   @Transactional
-  public void updateUserName(long userId, String userName) {
+  public void updateUserName(Long userId, String userName) {
     User user = userRepository.findById(userId)
       .orElseThrow(() -> new CustomException(USER_NOT_FOUND));  // 유저가 없으면 예외 던짐
 
+    log.info("Updating user name : {} -> {}", user.getUsername(), userName);
     user.updateUserName(userName);
   }
 
@@ -95,6 +110,7 @@ public class UserService {
     User user = userRepository.findById(userId)
       .orElseThrow(() -> new CustomException(USER_NOT_FOUND));  // 유저가 없으면 예외 던짐
 
+    log.info("Updating user");
     user.update(userDto);
   }
 }

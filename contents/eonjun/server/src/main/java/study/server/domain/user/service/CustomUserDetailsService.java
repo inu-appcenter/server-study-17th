@@ -1,10 +1,11 @@
-package study.server.global.security;
+package study.server.domain.user.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import study.server.domain.user.entity.CustomUserDetails;
 import study.server.domain.user.repository.UserRepository;
 
 @Service
