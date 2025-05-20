@@ -1,4 +1,4 @@
-package com.example.DTO;
+package com.example.dto.cart;
 
 import com.example.domain.cart.CartItem;
 import lombok.AllArgsConstructor;

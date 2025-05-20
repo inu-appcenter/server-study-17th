@@ -1,17 +1,18 @@
 package com.example.domain.user;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
@@ -20,7 +21,10 @@ public class User {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String phoneNumber;
+
+    @Column(nullable = false)
     private String address;
 
     @Column(nullable = false)

@@ -1,4 +1,4 @@
-package com.example.DTO;
+package com.example.dto.user;
 
 import com.example.domain.user.User;
 import lombok.Getter;
