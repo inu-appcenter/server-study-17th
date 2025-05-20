@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: server
+
+  config:
+    import: optional:file:.env[.properties]
+
+  profiles:
+    include: prod
+
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+    enabled: true
+  swagger-ui.path: /swagger-ui/index.html
+
+jwt:
+  expiration: 86400000
+  secret: ${JWT_SECRET}
+
+logging:
+  level:
+    root: INFO
+
