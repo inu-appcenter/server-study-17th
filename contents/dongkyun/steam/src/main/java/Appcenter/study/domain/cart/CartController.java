@@ -13,11 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/cart")
-public class CartController {
+public class CartController implements CartApiSpecification {
 
     private final CartService cartService;
 
-    // 장바구니 추가
     @PostMapping("/{gameId}")
     public ResponseEntity<CartResponse> addCart(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long gameId) {
         return ResponseEntity.status(HttpStatus.CREATED).body(cartService.addCart(userDetails, gameId));

@@ -30,7 +30,10 @@ public enum ErrorCode {
     LOGIN_FAILED(HttpStatus.UNAUTHORIZED, 401, "로그인이 실패하였습니다."),
 
     // Game
-    GAME_NOT_FOUND(HttpStatus.NOT_FOUND, 404, "게임을 찾을 수 없습니다.");
+    GAME_NOT_FOUND(HttpStatus.NOT_FOUND, 404, "게임을 찾을 수 없습니다."),
+
+    // Purchase
+    PURCHASE_NOT_FOUND(HttpStatus.NOT_FOUND, 404, "구매 정보를 찾을 수 없습니다.");
 
     private final HttpStatus httpStatus;
     private final Integer code;
