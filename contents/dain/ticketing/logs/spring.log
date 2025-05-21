@@ -1,92 +1,35 @@
-2025-05-13T14:21:31.686+09:00  INFO 16572 --- [ticketing] [main] c.e.ticketing.TicketingApplication       : Starting TicketingApplication using Java 17.0.12 with PID 16572 (D:\study\server-study-17th\contents\dain\ticketing\build\classes\java\main started by dain0 in D:\study\server-study-17th\contents\dain\ticketing)
-2025-05-13T14:21:31.688+09:00  INFO 16572 --- [ticketing] [main] c.e.ticketing.TicketingApplication       : No active profile set, falling back to 1 default profile: "default"
-2025-05-13T14:21:32.732+09:00  INFO 16572 --- [ticketing] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-05-13T14:21:32.813+09:00  INFO 16572 --- [ticketing] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 72 ms. Found 3 JPA repository interfaces.
-2025-05-13T14:21:33.450+09:00  INFO 16572 --- [ticketing] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2025-05-13T14:21:33.468+09:00  INFO 16572 --- [ticketing] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2025-05-13T14:21:33.468+09:00  INFO 16572 --- [ticketing] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.28]
-2025-05-13T14:21:33.555+09:00  INFO 16572 --- [ticketing] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2025-05-13T14:21:33.555+09:00  INFO 16572 --- [ticketing] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1810 ms
-2025-05-13T14:21:33.747+09:00  INFO 16572 --- [ticketing] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-05-13T14:21:33.838+09:00  INFO 16572 --- [ticketing] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
-2025-05-13T14:21:33.888+09:00  INFO 16572 --- [ticketing] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2025-05-13T14:21:34.329+09:00  INFO 16572 --- [ticketing] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-05-13T14:21:34.364+09:00  INFO 16572 --- [ticketing] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2025-05-13T14:21:34.745+09:00  INFO 16572 --- [ticketing] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3a3316b6
-2025-05-13T14:21:34.747+09:00  INFO 16572 --- [ticketing] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-05-13T14:21:34.801+09:00  WARN 16572 --- [ticketing] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-05-13T14:21:34.802+09:00  WARN 16572 --- [ticketing] [main] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
-2025-05-13T14:21:35.864+09:00  INFO 16572 --- [ticketing] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-05-13T14:21:35.971+09:00  INFO 16572 --- [ticketing] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-05-13T14:21:36.498+09:00  INFO 16572 --- [ticketing] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
-2025-05-13T14:21:37.752+09:00  INFO 16572 --- [ticketing] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
-2025-05-13T14:21:37.764+09:00  INFO 16572 --- [ticketing] [main] c.e.ticketing.TicketingApplication       : Started TicketingApplication in 6.549 seconds (process running for 7.535)
-2025-05-13T14:22:01.111+09:00  INFO 16572 --- [ticketing] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-05-13T14:22:01.111+09:00  INFO 16572 --- [ticketing] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2025-05-13T14:22:01.112+09:00  INFO 16572 --- [ticketing] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2025-05-13T14:22:02.126+09:00  INFO 16572 --- [ticketing] [http-nio-8080-exec-8] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 639 ms
-2025-05-13T14:22:26.711+09:00  INFO 16572 --- [ticketing] [http-nio-8080-exec-10] c.e.ticketing.person.PersonService       : [로그인 시도] loginId: test513
-2025-05-13T14:22:26.996+09:00  INFO 16572 --- [ticketing] [http-nio-8080-exec-10] c.e.ticketing.person.PersonService       : [로그인 성공] loginId: test513
-2025-05-13T14:27:00.141+09:00  INFO 16572 --- [ticketing] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2025-05-13T14:27:00.145+09:00  INFO 16572 --- [ticketing] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2025-05-13T14:27:00.162+09:00  INFO 16572 --- [ticketing] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2025-05-13T14:27:46.837+09:00  INFO 28808 --- [ticketing] [main] c.e.ticketing.TicketingApplication       : Starting TicketingApplication using Java 17.0.12 with PID 28808 (D:\study\server-study-17th\contents\dain\ticketing\build\classes\java\main started by dain0 in D:\study\server-study-17th\contents\dain\ticketing)
-2025-05-13T14:27:46.841+09:00  INFO 28808 --- [ticketing] [main] c.e.ticketing.TicketingApplication       : No active profile set, falling back to 1 default profile: "default"
-2025-05-13T14:27:47.970+09:00  INFO 28808 --- [ticketing] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-05-13T14:27:48.062+09:00  INFO 28808 --- [ticketing] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 81 ms. Found 3 JPA repository interfaces.
-2025-05-13T14:27:48.705+09:00  INFO 28808 --- [ticketing] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2025-05-13T14:27:48.730+09:00  INFO 28808 --- [ticketing] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2025-05-13T14:27:48.731+09:00  INFO 28808 --- [ticketing] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.28]
-2025-05-13T14:27:48.826+09:00  INFO 28808 --- [ticketing] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2025-05-13T14:27:48.827+09:00  INFO 28808 --- [ticketing] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1931 ms
-2025-05-13T14:27:49.006+09:00  INFO 28808 --- [ticketing] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-05-13T14:27:49.066+09:00  INFO 28808 --- [ticketing] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
-2025-05-13T14:27:49.105+09:00  INFO 28808 --- [ticketing] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2025-05-13T14:27:49.462+09:00  INFO 28808 --- [ticketing] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-05-13T14:27:49.492+09:00  INFO 28808 --- [ticketing] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2025-05-13T14:27:49.812+09:00  INFO 28808 --- [ticketing] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5d32c1c7
-2025-05-13T14:27:49.815+09:00  INFO 28808 --- [ticketing] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-05-13T14:27:49.864+09:00  WARN 28808 --- [ticketing] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-05-13T14:27:49.866+09:00  WARN 28808 --- [ticketing] [main] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
-2025-05-13T14:27:50.936+09:00  INFO 28808 --- [ticketing] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-05-13T14:27:51.046+09:00  INFO 28808 --- [ticketing] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-05-13T14:27:51.582+09:00  INFO 28808 --- [ticketing] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
-2025-05-13T14:27:52.987+09:00  INFO 28808 --- [ticketing] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
-2025-05-13T14:27:53.001+09:00  INFO 28808 --- [ticketing] [main] c.e.ticketing.TicketingApplication       : Started TicketingApplication in 6.695 seconds (process running for 7.479)
-2025-05-13T14:27:53.190+09:00  INFO 28808 --- [ticketing] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-05-13T14:27:53.190+09:00  INFO 28808 --- [ticketing] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2025-05-13T14:27:53.191+09:00  INFO 28808 --- [ticketing] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2025-05-13T14:27:54.250+09:00  INFO 28808 --- [ticketing] [http-nio-8080-exec-9] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 636 ms
-2025-05-13T14:28:10.354+09:00  INFO 28808 --- [ticketing] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2025-05-13T14:28:10.356+09:00  INFO 28808 --- [ticketing] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2025-05-13T14:28:10.366+09:00  INFO 28808 --- [ticketing] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2025-05-13T14:32:30.280+09:00  INFO 23076 --- [ticketing] [main] c.e.ticketing.TicketingApplication       : Starting TicketingApplication using Java 17.0.12 with PID 23076 (D:\study\server-study-17th\contents\dain\ticketing\build\classes\java\main started by dain0 in D:\study\server-study-17th\contents\dain\ticketing)
-2025-05-13T14:32:30.283+09:00  INFO 23076 --- [ticketing] [main] c.e.ticketing.TicketingApplication       : No active profile set, falling back to 1 default profile: "default"
-2025-05-13T14:32:31.358+09:00  INFO 23076 --- [ticketing] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-05-13T14:32:31.445+09:00  INFO 23076 --- [ticketing] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 78 ms. Found 3 JPA repository interfaces.
-2025-05-13T14:32:32.074+09:00  INFO 23076 --- [ticketing] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2025-05-13T14:32:32.089+09:00  INFO 23076 --- [ticketing] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2025-05-13T14:32:32.090+09:00  INFO 23076 --- [ticketing] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.28]
-2025-05-13T14:32:32.176+09:00  INFO 23076 --- [ticketing] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2025-05-13T14:32:32.176+09:00  INFO 23076 --- [ticketing] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1841 ms
-2025-05-13T14:32:32.357+09:00  INFO 23076 --- [ticketing] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-05-13T14:32:32.420+09:00  INFO 23076 --- [ticketing] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
-2025-05-13T14:32:32.462+09:00  INFO 23076 --- [ticketing] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2025-05-13T14:32:32.847+09:00  INFO 23076 --- [ticketing] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-05-13T14:32:32.879+09:00  INFO 23076 --- [ticketing] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2025-05-13T14:32:33.199+09:00  INFO 23076 --- [ticketing] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6ec3a4c2
-2025-05-13T14:32:33.202+09:00  INFO 23076 --- [ticketing] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-05-13T14:32:33.256+09:00  WARN 23076 --- [ticketing] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-05-13T14:32:33.258+09:00  WARN 23076 --- [ticketing] [main] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
-2025-05-13T14:32:34.394+09:00  INFO 23076 --- [ticketing] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-05-13T14:32:34.483+09:00  INFO 23076 --- [ticketing] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-05-13T14:32:35.135+09:00  INFO 23076 --- [ticketing] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
-2025-05-13T14:32:36.844+09:00  INFO 23076 --- [ticketing] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
-2025-05-13T14:32:36.858+09:00  INFO 23076 --- [ticketing] [main] c.e.ticketing.TicketingApplication       : Started TicketingApplication in 7.083 seconds (process running for 7.91)
-2025-05-13T14:32:39.858+09:00  INFO 23076 --- [ticketing] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-05-13T14:32:39.859+09:00  INFO 23076 --- [ticketing] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2025-05-13T14:32:39.860+09:00  INFO 23076 --- [ticketing] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2025-05-13T14:32:40.790+09:00  INFO 23076 --- [ticketing] [http-nio-8080-exec-6] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 560 ms
-2025-05-13T14:35:05.511+09:00  INFO 23076 --- [ticketing] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2025-05-13T14:35:05.514+09:00  INFO 23076 --- [ticketing] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2025-05-13T14:35:05.533+09:00  INFO 23076 --- [ticketing] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-05-14T13:14:02.050+09:00  INFO 17840 --- [ticketing] [main] c.e.ticketing.TicketingApplication       : Starting TicketingApplication using Java 17.0.12 with PID 17840 (D:\study\server-study-17th\contents\dain\ticketing\build\classes\java\main started by dain0 in D:\study\server-study-17th\contents\dain\ticketing)
+2025-05-14T13:14:02.055+09:00  INFO 17840 --- [ticketing] [main] c.e.ticketing.TicketingApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-05-14T13:14:02.821+09:00  INFO 17840 --- [ticketing] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-05-14T13:14:02.880+09:00  INFO 17840 --- [ticketing] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 51 ms. Found 3 JPA repository interfaces.
+2025-05-14T13:14:03.357+09:00  INFO 17840 --- [ticketing] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-05-14T13:14:03.367+09:00  INFO 17840 --- [ticketing] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-05-14T13:14:03.368+09:00  INFO 17840 --- [ticketing] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.28]
+2025-05-14T13:14:03.427+09:00  INFO 17840 --- [ticketing] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-05-14T13:14:03.428+09:00  INFO 17840 --- [ticketing] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1329 ms
+2025-05-14T13:14:03.558+09:00  INFO 17840 --- [ticketing] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-05-14T13:14:03.628+09:00  INFO 17840 --- [ticketing] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2025-05-14T13:14:03.670+09:00  INFO 17840 --- [ticketing] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-05-14T13:14:03.965+09:00  INFO 17840 --- [ticketing] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-05-14T13:14:03.994+09:00  INFO 17840 --- [ticketing] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-05-14T13:14:04.255+09:00  INFO 17840 --- [ticketing] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4dac40b
+2025-05-14T13:14:04.257+09:00  INFO 17840 --- [ticketing] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-05-14T13:14:04.309+09:00  WARN 17840 --- [ticketing] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-05-14T13:14:04.310+09:00  WARN 17840 --- [ticketing] [main] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-05-14T13:14:05.188+09:00  INFO 17840 --- [ticketing] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-05-14T13:14:05.288+09:00  INFO 17840 --- [ticketing] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-05-14T13:14:05.696+09:00  INFO 17840 --- [ticketing] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2025-05-14T13:14:06.618+09:00  INFO 17840 --- [ticketing] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-05-14T13:14:06.630+09:00  INFO 17840 --- [ticketing] [main] c.e.ticketing.TicketingApplication       : Started TicketingApplication in 5.18 seconds (process running for 5.885)
+2025-05-14T13:14:22.108+09:00  INFO 17840 --- [ticketing] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-05-14T13:14:22.109+09:00  INFO 17840 --- [ticketing] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-05-14T13:14:22.111+09:00  INFO 17840 --- [ticketing] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2025-05-14T13:14:23.643+09:00  INFO 17840 --- [ticketing] [http-nio-8080-exec-8] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 882 ms
+2025-05-14T13:15:11.244+09:00  INFO 17840 --- [ticketing] [http-nio-8080-exec-9] c.e.ticketing.person.PersonService       : [회원가입 시도] loginId: test514
+2025-05-14T13:15:11.935+09:00  INFO 17840 --- [ticketing] [http-nio-8080-exec-9] c.e.ticketing.person.PersonService       : [회원가입 성공] loginId: test514
+2025-05-14T13:15:39.320+09:00  INFO 17840 --- [ticketing] [http-nio-8080-exec-3] c.e.ticketing.person.PersonService       : [로그인 시도] loginId: test514
+2025-05-14T13:15:39.682+09:00  INFO 17840 --- [ticketing] [http-nio-8080-exec-3] c.e.ticketing.person.PersonService       : [로그인 성공] loginId: test514
+2025-05-14T13:41:35.632+09:00  INFO 17840 --- [ticketing] [http-nio-8080-exec-7] c.e.ticketing.person.PersonService       : [로그인 시도] loginId: test514
+2025-05-14T13:41:35.880+09:00  INFO 17840 --- [ticketing] [http-nio-8080-exec-7] c.e.ticketing.person.PersonService       : [로그인 성공] loginId: test514
+2025-05-14T13:42:20.262+09:00  WARN 17840 --- [ticketing] [http-nio-8080-exec-2] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Cannot deserialize value of type `com.example.ticketing.show.ShowState` from String "RESERVATION": not one of the values accepted for Enum class: [COMPLETED, BEFORE_RESERVATION, DURING_RESERVATION]]
+2025-05-14T14:19:02.941+09:00  WARN 17840 --- [ticketing] [http-nio-8080-exec-6] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Cannot deserialize value of type `com.example.ticketing.show.ShowState` from String "RESERVATION": not one of the values accepted for Enum class: [COMPLETED, BEFORE_RESERVATION, DURING_RESERVATION]]
