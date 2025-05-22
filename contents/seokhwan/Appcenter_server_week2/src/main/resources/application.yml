@@ -1,14 +1,14 @@
 # 서버 포트 설정
 server:
-  port: 8082
+  port: 8080
 
 # database 연동 설정
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/server_study?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://appcenter-db.c3oog0ogou6x.ap-northeast-2.rds.amazonaws.com:3306/AppcenterServerDB
     username: root
-    password: root
+    password: qwer1234
   thymeleaf:
     cache: false
 
@@ -18,7 +18,7 @@ spring:
     open-in-view: false
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
 
 jwt:
   header: Authorization

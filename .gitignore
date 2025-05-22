@@ -41,3 +41,6 @@ out/
 # OS Files
 .DS_Store
 *DS_Store
+
+#Application yml
+contents/seokhwan/Appcenter_server_week2/src/main/resources/application.yml
