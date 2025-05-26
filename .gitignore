@@ -41,5 +41,8 @@ out/
 .DS_Store
 *DS_Store
 
+#Application yml
+contents/seokhwan/Appcenter_server_week2/src/main/resources/application.yml
+
 # Application Properties
 contents/dongkyun/steam/src/main/resources/application.yml
