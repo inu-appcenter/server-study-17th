@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
-@RestControllerAdvice(annotations = RestController.class, basePackages = {"study.server.domain.user"})
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
   // 유효성 검사 실패 처리
