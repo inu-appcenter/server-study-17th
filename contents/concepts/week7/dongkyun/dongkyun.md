@@ -280,7 +280,7 @@
             1. Jenkins에 비해 사용자층과 플러그인 수가 적음
             2. GitHub Actions 등 최신 툴에 비해 다소 무거움
 
-
+ 
 | **항목** | **Jenkins** | **GoCD** |
 | --- | --- | --- |
 | 개발사 | 오픈소스 커뮤니티 | ThoughtWorks |
