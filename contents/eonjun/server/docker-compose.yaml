@@ -1,0 +1,45 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: server
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      SPRING_DATASOURCE_URL: ${MYSQL_URL}
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  mysql:
+    hostname: mysql
+    container_name: mysql-server
+    image: mysql:latest
+    env_file:
+      - .env
+    ports:
+      - "3310:3306"
+    volumes:
+      - db_mysql:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "--silent" ]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+    networks:
+      - app-network
+
+volumes:
+  db_mysql:
+
+networks:
+  app-network:
+    driver: bridge

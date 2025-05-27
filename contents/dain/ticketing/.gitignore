@@ -1,12 +1,13 @@
-# Build and Deploy
 HELP.md
+application.properties
+application.yml
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-# IDE - Eclipse/STS
+### STS ###
 .apt_generated
 .classpath
 .factorypath
@@ -18,7 +19,7 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
-# IDE - IntelliJ IDEA
+### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
@@ -27,22 +28,12 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
-# IDE - NetBeans
+### NetBeans ###
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
 
-# IDE - VS Code
+### VS Code ###
 .vscode/
-
-# OS Files
-.DS_Store
-*DS_Store
-
-#Application yml
-contents/seokhwan/Appcenter_server_week2/src/main/resources/application.yml
-
-# Application Properties
-contents/dongkyun/steam/src/main/resources/application.yml
