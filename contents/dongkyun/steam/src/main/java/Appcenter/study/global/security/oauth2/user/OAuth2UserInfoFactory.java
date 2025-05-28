@@ -1,6 +1,5 @@
 package Appcenter.study.global.security.oauth2.user;
 
-
 import Appcenter.study.global.security.oauth2.exception.OAuth2AuthenticationProcessingException;
 
 import java.util.Map;

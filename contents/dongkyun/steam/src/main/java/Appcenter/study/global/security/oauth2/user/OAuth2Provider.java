@@ -11,10 +11,10 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public enum OAuth2Provider {
 
-    NORMAL("normal"),
-    GOOGLE("google"),
-    KAKAO("kakao"),
-    NAVER("naver");
+//    NORMAL("normal"),
+//    GOOGLE("google"),
+    KAKAO("kakao");
+//    NAVER("naver");
 
     @JsonValue
     private final String registrationId;

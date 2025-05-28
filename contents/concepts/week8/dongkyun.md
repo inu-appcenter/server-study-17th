@@ -71,6 +71,18 @@
                 - 인가 코드 콜백: **`/login/oauth2/code/{provider}`**
             - **토큰 및 사용자 정보 관리**: Access Token과 사용자 정보는 내부적으로 관리되며, 필요시 커스텀 UserService, SuccessHandler 등을 통해 추가 처리(회원가입, DB 저장, 추가 정보 입력 등)가 가능
             - **비즈니스 로직 분리**: 인증/인가
+
+    예시)
+
+    [https://kauth.kakao.com/oauth/authorize?client_id=](https://kauth.kakao.com/oauth/authorize?client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT&response_type=code&scope=profile_nickname)[YOUR_CLIENT_ID](https://kakao.com/login/oauth/authorize?client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&scope=user&state=RANDOM_STRING)[&redirect_uri=](https://kauth.kakao.com/oauth/authorize?client_id=abcd1234efgh5678ijkl90mn&redirect_uri=http://localhost:8080/login/oauth2/code/kakao&response_type=code&scope=profile_nickname)[YOUR_REDIRECT](https://kakao.com/login/oauth/authorize?client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&scope=user&state=RANDOM_STRING)[&response_type=code&scope=profile_nickname profile_image account_email&state=test123](https://kauth.kakao.com/oauth/authorize?client_id=abcd1234efgh5678ijkl90mn&redirect_uri=http://localhost:8080/login/oauth2/code/kakao&response_type=code&scope=profile_nickname)
+
+    <br>
+   
+    Steam 서버)
+
+    [https://kauth.kakao.com/oauth/authorize?client_id=99883aa97f8add4bb9be8717472f7a95&redirect_uri=http://localhost:8080/login/oauth2/code/kakao&response_type=code&scope=profile_nickname profile_image account_email&state=test123](https://kauth.kakao.com/oauth/authorize?client_id=99883aa97f8add4bb9be8717472f7a95&redirect_uri=http://localhost:8080/login/oauth2/code/kakao&response_type=code&scope=profile_nickname%20profile_image%20account_email&state=test123)
+
+**직접 브라우저에서 소셜 로그인 인증 URL을 입력해서 테스트**
            
 ## 🔎 과제
 
