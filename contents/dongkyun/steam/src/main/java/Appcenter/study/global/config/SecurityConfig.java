@@ -4,6 +4,10 @@ import Appcenter.study.global.security.jwt.JwtFilter;
 import Appcenter.study.global.security.jwt.JwtTokenProvider;
 import Appcenter.study.global.security.jwt.handler.JwtAccessDeniedHandler;
 import Appcenter.study.global.security.jwt.handler.JwtAuthenticationEntryPoint;
+import Appcenter.study.global.security.oauth2.HttpCookieOAuth2AuthorizationRequestRepository;
+import Appcenter.study.global.security.oauth2.handler.OAuth2AuthenticationFailureHandler;
+import Appcenter.study.global.security.oauth2.handler.OAuth2AuthenticationSuccessHandler;
+import Appcenter.study.global.security.oauth2.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +28,10 @@ public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+    private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
 
     // 비밀번호 암호화 빈
     @Bean
@@ -64,7 +72,15 @@ public class SecurityConfig {
                 )
 
                 // JWT 필터를 앞에 설정
-                .addFilterBefore(new JwtFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+
+                // OAUTH 2.0
+                .oauth2Login(configure -> configure
+                        .authorizationEndpoint(config -> config.authorizationRequestRepository(httpCookieOAuth2AuthorizationRequestRepository))
+                        .userInfoEndpoint(config -> config.userService(customOAuth2UserService))
+                        .successHandler(oAuth2AuthenticationSuccessHandler)
+                        .failureHandler(oAuth2AuthenticationFailureHandler)
+                );
 
         return http.build();
     }
